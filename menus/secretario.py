@@ -1,7 +1,39 @@
 import time
+from funciones.secretario.login import validar_credenciales
 
 def mostrar_menu_secretaria():
-    """Submenú para secretaría con diseño mejorado"""
+    """Menú de secretaría con sistema de login"""
+    while True:
+        try:
+            # Limpiar pantalla y mostrar título
+            print("\033[H\033[J", end="")
+            print("""
+   ___      _      _             _       
+  / __| ___| |_ __| |__ _ _ __ (_)__ ___
+ | (__ / _ \  _/ _` / _` | '  \| / _(_-<
+  \___|\___/\__\__,_\__,_|_|_|_|_\__/__/
+            """)
+
+            print("╔══════════════════════════════════════════╗")
+            print("║        🔐 ACCESO SECRETARÍA 🔐            ║")
+            print("╠══════════════════════════════════════════╣")
+            
+            usuario = input("\n" + " " * 10 + "Usuario: ")
+            
+            password = input(" " * 10 + "Contraseña: ")
+
+            if validar_credenciales(usuario, password):
+                menu_secretario_principal()
+                break
+            else:
+                print("\n" + " " * 10 + "⚠️ Credenciales incorrectas!")
+                time.sleep(1.5)
+                
+        except:
+            break
+
+def menu_secretario_principal():
+    """Menú principal después del login"""
     while True:
         try:
             print("\033[H\033[J", end="")
@@ -10,9 +42,8 @@ def mostrar_menu_secretaria():
   / __| ___| |_ __| |__ _ _ __ (_)__ ___
  | (__ / _ \  _/ _` / _` | '  \| / _(_-<
   \___|\___/\__\__,_\__,_|_|_|_|_\__/__/
-        """)
+            """)
             
-            # Marco decorativo
             print("╔══════════════════════════════════════════╗")
             print("║        📋 MÓDULO DE SECRETARÍA 📋         ║")
             print("╠══════════════════════════════════════════╣")
@@ -23,8 +54,7 @@ def mostrar_menu_secretaria():
             print("║                                          ║")
             print("╚══════════════════════════════════════════╝")
             
-            
-            opcion = input("\n" + " " * 10 + "➤ Seleccione una opción [1-3]:")
+            opcion = input("\n" + " " * 10 + "➤ Seleccione una opción [1-3]: ")
             
             if opcion == "1":
                 print("\n" + " " * 15 + "🔨 Función en construcción...")
@@ -35,7 +65,7 @@ def mostrar_menu_secretaria():
             elif opcion == "3":
                 break
             else:
-                print("\n" + " " * 10 + "⚠️  Opción inválida! Intente nuevamente")
+                print("\n" + " " * 10 + "⚠️ Opción inválida!")
                 time.sleep(1)
                 
         except KeyboardInterrupt:
