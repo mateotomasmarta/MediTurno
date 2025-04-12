@@ -7,7 +7,7 @@ def mostrar_menu_principal():
     """Menú principal con diseño mejorado para terminal"""
     while True:
         try:
-            # Arte ASCII para el título
+
             print("""
   __  __      _ _   _____             
  |  \/  |    | (_) |_   _|            
@@ -29,15 +29,15 @@ def mostrar_menu_principal():
             print("╚══════════════════════════════════════════╝")
 
             
-            opcion = input("\n" + " " * 10 + "➤➤➤ Seleccione una opción [1-3]:")
+            opcion = input("➤➤➤ Seleccione una opción [1-3]:")
             
             if opcion == "1":
-                print("\n" + " " * 15 + "🔄 Cargando módulo de pacientes...")
+                print("🔄 Cargando módulo de pacientes...")
                 time.sleep(1)
                 mostrar_menu_pacientes()
                 
             elif opcion == "2":
-                print("\n" + " " * 15 + "🔄 Cargando módulo de secretaría...")
+                print("🔄 Cargando módulo de secretaría...")
                 time.sleep(1)
                 mostrar_menu_secretaria()
                 
@@ -51,11 +51,10 @@ def mostrar_menu_principal():
                 sys.exit(0)
                 
             else:
-                print("\n" + " " * 10 + "⚠️  Opción inválida! Intente nuevamente")
+                print("⚠️  Opción inválida! Intente nuevamente")
                 time.sleep(1)
                 
-        except KeyboardInterrupt:
-            print("\n\n" + " " * 15 + "🚨 Operación cancelada por el usuario")
+        except:
             sys.exit(0)
 
 if __name__ == "__main__":

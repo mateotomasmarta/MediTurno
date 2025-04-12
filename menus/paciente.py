@@ -26,7 +26,7 @@ def mostrar_menu_pacientes():
             print("║                                          ║")
             print("╚══════════════════════════════════════════╝")
             
-            opcion = input("\n" + " " * 10 + "➤ Seleccione una opción [1-3]:")
+            opcion = input("➤ Seleccione una opción [1-3]:")
             
             if opcion == "1":
                 print("\n" + " " * 15 + "🔨 Función en construcción...")
@@ -40,9 +40,7 @@ def mostrar_menu_pacientes():
                 print("\n" + " " * 10 + "⚠️  Opción inválida! Intente nuevamente")
                 time.sleep(1)
                 
-        except KeyboardInterrupt:
-            print("\n\n" + " " * 15 + "🚨 Volviendo al menú principal...")
-            time.sleep(1)
+        except:
             break
 
 if __name__ == "__main__":

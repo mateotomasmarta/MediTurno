@@ -18,15 +18,15 @@ def mostrar_menu_secretaria():
             print("║        🔐 ACCESO SECRETARÍA 🔐            ║")
             print("╠══════════════════════════════════════════╣")
             
-            usuario = input("\n" + " " * 10 + "Usuario: ")
+            usuario = input("Usuario: ")
             
-            password = input(" " * 10 + "Contraseña: ")
+            password = input("Contraseña: ")
 
             if validar_credenciales(usuario, password):
                 menu_secretario_principal()
                 break
             else:
-                print("\n" + " " * 10 + "⚠️ Credenciales incorrectas!")
+                print("⚠️ Credenciales incorrectas!")
                 time.sleep(1.5)
                 
         except:
@@ -36,7 +36,6 @@ def menu_secretario_principal():
     """Menú principal después del login"""
     while True:
         try:
-            print("\033[H\033[J", end="")
             print("""
    ___      _      _             _       
   / __| ___| |_ __| |__ _ _ __ (_)__ ___
@@ -54,7 +53,7 @@ def menu_secretario_principal():
             print("║                                          ║")
             print("╚══════════════════════════════════════════╝")
             
-            opcion = input("\n" + " " * 10 + "➤ Seleccione una opción [1-3]: ")
+            opcion = input("➤ Seleccione una opción [1-3]: ")
             
             if opcion == "1":
                 print("\n" + " " * 15 + "🔨 Función en construcción...")
@@ -68,9 +67,7 @@ def menu_secretario_principal():
                 print("\n" + " " * 10 + "⚠️ Opción inválida!")
                 time.sleep(1)
                 
-        except KeyboardInterrupt:
-            print("\n\n" + " " * 15 + "🚨 Volviendo al menú principal...")
-            time.sleep(1)
+        except:
             break
 
 if __name__ == "__main__":
