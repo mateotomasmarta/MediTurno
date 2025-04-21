@@ -1,0 +1,56 @@
+busqueda.py
+from datos import matriz_pacientes
+→ Importa la lista de pacientes desde el archivo de datos.
+def buscar_por_dni(dni):
+→ Define una función que busca pacientes cuyo DNI coincida exactamente.
+return [p for p in matriz_pacientes if p['dni'] == dni]
+→ Devuelve una lista de pacientes que cumplen con ese DNI.
+def buscar_por_apellido(apellido):
+→ Función que busca pacientes por apellido.
+return [p for p in matriz_pacientes if p['apellido'].lower() == apellido.lower()]
+→ Ignora mayúsculas/minúsculas al comparar.
+def buscar_por_dni_y_apellido(dni, apellido):
+→ Función que filtra por ambos criterios al mismo tiempo.
+return [p for p in matriz_pacientes if p['dni'] == dni and p['apellido'].lower() == apellido.lower()]
+→ Devuelve solo si coinciden ambos campos.
+
+mostrar_paciente.py
+from datos import matriz_turnos
+→ Importa la matriz de turnos.
+def mostrar_datos_paciente(paciente):
+→ Muestra los datos personales de un paciente.
+print(...) x4
+→ Imprime nombre, apellido, DNI y edad del paciente.
+
+mostrar_turnos_paciente(paciente['id'])
+→ Llama a la función que muestra los turnos del paciente por ID.
+def mostrar_turnos_paciente(paciente_id):
+→ Función auxiliar que lista los turnos asociados a un ID.
+if not turnos: ...
+→ Muestra mensaje si no tiene turnos.
+else: ...
+→ Muestra cada turno con día y hora si existen.
+
+filtro.py
+from datos import matriz_turnos
+→ Importa los turnos desde el archivo de datos.
+def turnos_por_dia(dia):
+→ Filtra la lista de turnos por día específico.
+def turnos_disponibles():
+→ Retorna solo turnos sin paciente asignado (paciente_id es None).
+def turnos_ocupados():
+→ Retorna turnos donde paciente_id está asignado.
+
+mostrar_turnos.py
+def mostrar_turnos(turnos):
+→ Muestra una lista de turnos con su estado.
+if not turnos: ...
+→ Indica si la lista está vacía.
+for turno in turnos: ...
+→ Itera sobre los turnos y muestra su ID, día, hora y si está disponible.
+
+validaciones.py
+def validar_dni(dni):
+→ Verifica que el DNI contenga solo números.
+def validar_dia(dia):
+→ Valida si el día ingresado es uno de los aceptados (lunes, miércoles, viernes).
