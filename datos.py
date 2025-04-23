@@ -4,7 +4,6 @@ matriz_pacientes =[
                 'dni': '30123456',
                 'nombre': 'Ana',
                 'apellido': 'Gómez',
-                'telefono': '3515551234',
                 'edad': 28
             },
             {
@@ -24,60 +23,32 @@ matriz_pacientes =[
             }
         ]
 
-matriz_pacientes =[
-            {
-                'id': 1,
-                'dni': '30123456',
-                'nombre': 'Ana',
-                'apellido': 'Gómez',
-                'telefono': '3515551234',
-                'edad': 28
-            },
-            {
-                'id': 2,
-                'dni': '28987654',
-                'nombre': 'Carlos',
-                'apellido': 'López',
-                'edad': 35
-            },
-            {
-                'id': 3,
-                'dni': '35123456',
-                'nombre': 'María',
-                'apellido': 'Sánchez',
-                'edad': 42
-
-            }
-        ]
 
 matriz_turnos = [
-        # Día 1
-        {'id': 1, 'dia': 'lunes', 'hora': '08:00', 'paciente_id': 1, 'estado': 'disponible'},
-        {'id': 2, 'dia': 'lunes', 'hora': '09:00', 'paciente_id': None, 'estado': 'disponible'},
-        {'id': 3, 'dia': 'lunes', 'hora': '10:00', 'paciente_id': None, 'estado': 'disponible'},
-        {'id': 4, 'dia': 'lunes', 'hora': '11:00', 'paciente_id': 2, 'estado': 'disponible'},
-        {'id': 5, 'dia': 'lunes', 'hora': '16:00', 'paciente_id': None, 'estado': 'disponible'},
-        
-        # Día 2
-        {'id': 6, 'dia': 'miércoles', 'hora': '08:00', 'paciente_id': None, 'estado': 'disponible'},
-        {'id': 7, 'dia': 'miércoles', 'hora': '09:00', 'paciente_id': 2, 'estado': 'disponible'},
-        {'id': 8, 'dia': 'miércoles', 'hora': '10:00', 'paciente_id': 3, 'estado': 'disponible'},
-        {'id': 9, 'dia': 'miércoles', 'hora': '11:00', 'paciente_id': None, 'estado': 'disponible'},
-        {'id': 10, 'dia': 'miércoles', 'hora': '16:00', 'paciente_id': None, 'estado': 'disponible'},
-        
-        # Día 3
-        {'id': 11, 'dia': 'viernes', 'hora': '08:00', 'paciente_id': None, 'estado': 'disponible'},
-        {'id': 12, 'dia': 'viernes', 'hora': '09:00', 'paciente_id': 1, 'estado': 'disponible'},
-        {'id': 13, 'dia': 'viernes', 'hora': '10:00', 'paciente_id': None, 'estado': 'disponible'},
-        {'id': 14, 'dia': 'viernes', 'hora': '11:00', 'paciente_id': None, 'estado': 'disponible'},
-        {'id': 15, 'dia': 'viernes', 'hora': '16:00', 'paciente_id': 3, 'estado': 'disponible'}
-    ]
+    [1, 'lunes', '08:00', 1, 'disponible'],
+    [2, 'lunes', '09:00', None, 'disponible'],
+    [3, 'lunes', '10:00', None, 'disponible'],
+    [4, 'lunes', '11:00', 2, 'disponible'],
+    [5, 'lunes', '16:00', None, 'disponible'],
+    
+    [6, 'miércoles', '08:00', None, 'disponible'],
+    [7, 'miércoles', '09:00', 2, 'disponible'],
+    [8, 'miércoles', '10:00', 3, 'disponible'],
+    [9, 'miércoles', '11:00', None, 'disponible'],
+    [10, 'miércoles', '16:00', None, 'disponible'],
+    
+    [11, 'viernes', '08:00', None, 'disponible'],
+    [12, 'viernes', '09:00', 1, 'disponible'],
+    [13, 'viernes', '10:00', None, 'disponible'],
+    [14, 'viernes', '11:00', None, 'disponible'],
+    [15, 'viernes', '16:00', 3, 'disponible']
+]
 
-matriz_secretario =[
-            {
-                'id': 1,
-                'usuario': 'admin',
-                'password': 'admin123',  # En producción usaría hashing
-            }
-    ]
+secretaria = ("admin", "admin123"),
 
+matriz_medicos = [
+    ['Dr. Juan Pérez', 'Cardiología', 'Sala 1'],
+    ['Dra. Ana Gómez', 'Pediatría', 'Sala 2'],
+    ['Dr. Carlos López', 'Dermatología', 'Sala 3'],
+    ['Dra. María Sánchez', 'Ginecología', 'Sala 4']
+]
