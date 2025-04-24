@@ -1,25 +1,18 @@
 import time
 from funciones.secretario.login import validar_credenciales
+from utils.auxiliares import buscar_por_dni, buscar_por_nombre_o_apellido
+from funciones.secretario.agenda import mostrar_turnos_disponibles, mostrar_turnos_ocupados, mostrar_todos_turnos
+
 
 def mostrar_menu_secretaria():
     """Menú de secretaría con sistema de login"""
     while True:
         try:
-            # Limpiar pantalla y mostrar título
-            print("\033[H\033[J", end="")
-            print("""
-   ___      _      _             _       
-  / __| ___| |_ __| |__ _ _ __ (_)__ ___
- | (__ / _ \  _/ _` / _` | '  \| / _(_-<
-  \___|\___/\__\__,_\__,_|_|_|_|_\__/__/
-            """)
-
             print("╔══════════════════════════════════════════╗")
             print("║        🔐 ACCESO SECRETARÍA 🔐            ║")
             print("╠══════════════════════════════════════════╣")
             
             usuario = input("Usuario: ")
-            
             password = input("Contraseña: ")
 
             if validar_credenciales(usuario, password):
@@ -32,17 +25,11 @@ def mostrar_menu_secretaria():
         except:
             break
 
+
 def menu_secretario_principal():
     """Menú principal después del login"""
     while True:
         try:
-            print("""
-   ___      _      _             _       
-  / __| ___| |_ __| |__ _ _ __ (_)__ ___
- | (__ / _ \  _/ _` / _` | '  \| / _(_-<
-  \___|\___/\__\__,_\__,_|_|_|_|_\__/__/
-            """)
-            
             print("╔══════════════════════════════════════════╗")
             print("║        📋 MÓDULO DE SECRETARÍA 📋         ║")
             print("╠══════════════════════════════════════════╣")
@@ -56,19 +43,126 @@ def menu_secretario_principal():
             opcion = input("➤ Seleccione una opción [1-3]: ")
             
             if opcion == "1":
-                print("\n" + " " * 15 + "🔨 Función en construcción...")
-                input("\n" + " " * 10 + "⏎ Presione Enter para continuar...")
+                while True:
+                    print("╔══════════════════════════════════════════╗")
+                    print("║        📋 GESTIONAR PACIENTES            ║")
+                    print("╠══════════════════════════════════════════╣")
+                    print("║                                          ║")
+                    print("║  1. 📋 Buscar por DNI                    ║")
+                    print("║  2. 📋 Buscar por Nombre o Apellido      ║")
+                    print("║  3. ↩️ Volver al menú principal         ║")
+                    print("║                                          ║")
+                    print("╚══════════════════════════════════════════╝")
+                    
+                    opcion_paciente = input("➤ Seleccione una opción [1-3]: ")
+                    
+                    if opcion_paciente == "1":
+                        dni = input("📋 Ingrese el DNI del paciente: ")
+                        resultados = buscar_por_dni(dni)
+                        if resultados:
+                            for i, paciente in enumerate(resultados, 1):
+                                print(" " * 10 + f"\n🧑 Paciente #{i}:")
+                                print(" " * 12 + f"├─ Nombre: {paciente['nombre']}")
+                                print(" " * 12 + f"├─ Apellido: {paciente['apellido']}")
+                                print(" " * 12 + f"├─ Edad: {paciente['edad']} años")
+                                print(" " * 12 + f"└─ DNI: {paciente['dni']}")
+                        else:
+                            print("\n" + " " * 10 + "⚠️ No se encontraron resultados.")
+                        opcion = input("➤ Desea realizar otra búsqueda? (s/n): ").lower()
+                        if opcion != "s":
+                            break
+                    
+                    elif opcion_paciente == "2":
+                        filtro = input("📋 Ingrese el nombre o apellido del paciente: ")
+                        resultados = buscar_por_nombre_o_apellido(filtro)
+                        if resultados:
+                            for i, paciente in enumerate(resultados, 1):
+                                print(" " * 10 + f"\n🧑 Paciente #{i}:")
+                                print(" " * 12 + f"├─ Nombre: {paciente['nombre']}")
+                                print(" " * 12 + f"├─ Apellido: {paciente['apellido']}")
+                                print(" " * 12 + f"├─ Edad: {paciente['edad']} años")
+                                print(" " * 12 + f"└─ DNI: {paciente['dni']}")
+                        else:
+                            print("\n" + " " * 10 + "⚠️ No se encontraron resultados.")
+                        opcion = input("➤ Desea realizar otra búsqueda? (s/n): ").lower()
+                        if opcion != "s":
+                            break
+                    
+                    elif opcion_paciente == "3":
+                        break
+                    else:
+                        print("\n⚠️ Opción inválida!")
+                        time.sleep(1)
+            
             elif opcion == "2":
-                print("\n" + " " * 15 + "🔨 Función en construcción...")
-                input("\n" + " " * 10 + "⏎ Presione Enter para continuar...")
+                print("\n" + "═" * 70)
+                print("📊 TODOS LOS TURNOS")
+                mostrar_todos_turnos()
+                
+                while True:
+                    print("\n╔══════════════════════════════════════════╗")
+                    print("║        🛠️ GESTIONAR TURNOS               ║")
+                    print("╠══════════════════════════════════════════╣")
+                    print("║                                          ║")
+                    print("║  1. ✏️ Modificar un turno                ║")
+                    print("║  2. 🗑️ Eliminar un turno                 ║")
+                    print("║  3. 📅 Filtrar turnos                    ║")
+                    print("║  4. ↩️ Volver al menú principal          ║")
+                    print("║                                          ║")
+                    print("╚══════════════════════════════════════════╝")
+                    
+                    opcion_turno = input("➤ Seleccione una opción [1-4]: ")
+                    
+                    if opcion_turno == "1":
+                        pass
+                    
+                    elif opcion_turno == "2":
+                        pass
+                        
+                    
+                    elif opcion_turno == "3":
+                        while True:
+                            print("╔══════════════════════════════════════════╗")
+                            print("║        📅 FILTRAR TURNOS                 ║")
+                            print("╠══════════════════════════════════════════╣")
+                            print("║                                          ║")
+                            print("║  1. 📅 Filtrar por ocupados              ║")
+                            print("║  2. 📅 Filtrar por disponibles           ║")
+                            print("║  3. ↩️ Volver al menú principal          ║")
+                            print("║                                          ║")
+                            print("╚══════════════════════════════════════════╝")
+                            
+                            opcion_filtro = input("➤ Seleccione una opción [1-3]: ")
+                            
+                            if opcion_filtro == "1":
+                                mostrar_turnos_ocupados()
+                            elif opcion_filtro == "2":
+                                mostrar_turnos_disponibles()
+                            elif opcion_filtro == "3":
+                                break
+                            else:
+                                print("\n⚠️ Opción inválida!")
+                                time.sleep(1)
+                        break
+                    
+                    elif opcion_turno == "4":
+                        break
+                    
+                    else:
+                        print("\n⚠️ Opción inválida!")
+                        time.sleep(1)
+            
             elif opcion == "3":
                 break
+            
             else:
-                print("\n" + " " * 10 + "⚠️ Opción inválida!")
+                print("\n⚠️ Opción inválida!")
                 time.sleep(1)
-                
-        except:
+        
+        except Exception as e:
+            print(f"⚠️ Error: {e}")
             break
+
 
 if __name__ == "__main__":
     mostrar_menu_secretaria()

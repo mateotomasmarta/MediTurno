@@ -4,16 +4,6 @@ def mostrar_menu_pacientes():
     """Submenú para pacientes con diseño mejorado"""
     while True:
         try:
-            print("\033[H\033[J", end="")
-            
-            # Arte ASCII para el subtítulo
-            print("""
-   ___       _       _             
-  / _ \__ _| |_ ___| |_ ___ _ __  
- / /_)/ _` | __/ __| __/ _ \ '_ \ 
-/ ___/ (_| | |_\__ \ ||  __/ | | |
-\/    \__,_|\__|___/\__\___|_| |_|
-            """)
             
             # Marco decorativo
             print("╔══════════════════════════════════════════╗")
