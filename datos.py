@@ -33,8 +33,7 @@ matriz_pacientes =[
                 'id': 5,
                 'dni': '49090334',
                 'nombre': 'Lucia',
-                'apellido': 'Fernande<
-                z',
+                'apellido': 'Fernandez',
                 'edad': 13
 
             }
