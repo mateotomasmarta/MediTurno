@@ -21,34 +21,55 @@ matriz_pacientes =[
                 'edad': 42
 
             }
+            {
+                'id': 4,
+                'dni': '53233456',
+                'nombre': 'Lautaro',
+                'apellido': 'Gomez',
+                'edad': 5
+
+            }
+{
+                'id': 5,
+                'dni': '49090334',
+                'nombre': 'Lucia',
+                'apellido': 'Fernande<
+                z',
+                'edad': 13
+
+            }
         ]
 
 
+# ID TURNO -- DIA -- HORARIO -- ID PACIENTE -- ESTADO -- ID DOCTOR
 matriz_turnos = [
-    [1, 'lunes', '08:00', 1, 'disponible'],
-    [2, 'lunes', '09:00', None, 'disponible'],
-    [3, 'lunes', '10:00', None, 'disponible'],
-    [4, 'lunes', '11:00', 2, 'disponible'],
-    [5, 'lunes', '16:00', None, 'disponible'],
-    
-    [6, 'miércoles', '08:00', None, 'disponible'],
-    [7, 'miércoles', '09:00', 2, 'disponible'],
-    [8, 'miércoles', '10:00', 3, 'disponible'],
-    [9, 'miércoles', '11:00', None, 'disponible'],
-    [10, 'miércoles', '16:00', None, 'disponible'],
-    
-    [11, 'viernes', '08:00', None, 'disponible'],
-    [12, 'viernes', '09:00', 1, 'disponible'],
-    [13, 'viernes', '10:00', None, 'disponible'],
-    [14, 'viernes', '11:00', None, 'disponible'],
-    [15, 'viernes', '16:00', 3, 'disponible']
+            [1, 'lunes', '08:00', 1, 'ocupado', 1],
+            [2, 'lunes', '09:00', , 'disponible', None],
+            [3, 'lunes', '10:00', None, 'disponible', None],
+            [4, 'lunes', '13:00', 5, 'ocupado', 2],
+            [5, 'lunes', '16:00', None, 'disponible', None],
+            [6, 'miércoles', '18:00', None, 'disponible', None],
+
+            [7, 'miércoles', '08:00', 2, 'ocupado', 1],
+            [8, 'miércoles', '09:00', 3, 'ocupado', 1],
+            [9, 'miércoles', '10:00', None, 'disponible', None],
+            [10, 'miércoles', '11:00', None, 'disponible', None],
+            [11, 'viernes', '13:00', None, 'disponible', None],
+            [12, 'viernes', '15:00', 4, 'ocupado', 2],
+            
+            [13, 'viernes', '09:00', None, 'disponible', None],
+            [14, 'viernes', '11:00', None, 'disponible', None],
+            [15, 'viernes', '13:00', 5, 'ocupado', 2],
+            [16, 'viernes', '15:00', 2, 'ocupado', 1],
+            [17, 'viernes', '16:00', None, 'disponible', None],
+            [18, 'viernes', '18:00', None, 'disponible', None],
+            
 ]
 
 secretaria = ("admin", "admin123"),
 
+# ID DOCTOR -- NOMBRE -- ESPECIALIDAD -- SALA
 matriz_medicos = [
-    ['Dr. Juan Pérez', 'Cardiología', 'Sala 1'],
-    ['Dra. Ana Gómez', 'Pediatría', 'Sala 2'],
-    ['Dr. Carlos López', 'Dermatología', 'Sala 3'],
-    ['Dra. María Sánchez', 'Ginecología', 'Sala 4']
+    [1, 'Dr. Juan Russo', 'Guaría', 'Sala 1'],
+    [1, 'Dra. Ana Brizuela', 'Pediatría', 'Sala 2']
 ]
