@@ -9,7 +9,7 @@ def mostrar_menu_secretaria():
     """Menú de secretaría con sistema de login"""
     while True:
         print("╔══════════════════════════════════════════╗")
-        print("║        🔐 ACCESO SECRETARÍA 🔐            ║")
+        print("║        🔐 ACCESO SECRETARÍA 🔐          ║")
         print("╠══════════════════════════════════════════╣")
         
         usuario = input("Usuario: ")
@@ -27,7 +27,7 @@ def menu_secretario_principal():
     """Menú principal después del login"""
     while True:
         print("╔══════════════════════════════════════════╗")
-        print("║        📋 MÓDULO DE SECRETARÍA 📋         ║")
+        print("║        📋 MÓDULO DE SECRETARÍA 📋        ║")
         print("╠══════════════════════════════════════════╣")
         print("║                                          ║")
         print("║  1. 👥 Gestionar Pacientes               ║")
@@ -117,8 +117,6 @@ def menu_secretario_principal():
                         dni = input("📋 Ingrese el DNI del paciente: ")
                         imprimir_turno_por_dni(dni)
                         vaciar_turno(matriz_turnos)
-                        
-                        # Preguntar si desea eliminar otro turno
                         opcion = input("➤ ¿Desea eliminar otro turno? (s/n): ").lower()
                         if opcion != "s":
                             break

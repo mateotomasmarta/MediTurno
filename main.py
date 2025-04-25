@@ -8,10 +8,10 @@ def mostrar_menu_principal():
     while True:
         # Marco decorativo
         print("╔══════════════════════════════════════════╗")
-        print("║            💎 MENÚ PRINCIPAL 💎           ║")
+        print("║            💎 MENÚ PRINCIPAL 💎         ║")
         print("╠══════════════════════════════════════════╣")
         print("║                                          ║")
-        print("║  1. 👨⚕️  Acceso Pacientes               ║")
+        print("║  1. 👨⚕️  Acceso Pacientes              ║")
         print("║  2. 👩💼 Acceso Secretaría              ║")
         print("║  3. 🔴 Salir del Sistema                ║")
         print("║                                          ║")
