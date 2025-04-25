@@ -42,7 +42,24 @@ def elegir_turno_a_modificar(turno_agendados):
 
    
     #pide que eliga el turno del paciente que desea modificar mediante ingresando el numero de turno (id).( variable que luego mando a funcion modificar turno)
+def elegir_dia (turnos_disponibles):
+   
+   bandera=True
+   while bandera:
+     bandera=True
+     print("")
+     dia_id=int(input("Ingrese el numero de la id del turno que desea elegir para la modificacion "))
 
+     for i in range(len(turnos_disponibles)) :
+
+        if  turnos_disponibles[i][0]==dia_id:
+           print("")
+           print(f'El turno que desea cambiar es {turnos_disponibles[i]} ')
+           bandera=False
+        elif bandera==True and i == len(turnos_disponibles)-1:
+           print("Intente de nuevo")
+       
+   return dia_id
 
 def modificar_turno():
     pass
@@ -52,4 +69,7 @@ def main():
     turnos_a=muestra_turnos_ocupados()
     
     turno_a_modificar=elegir_turno_a_modificar(turnos_a)
+
+    turnos_d=muestra_turnos_disponibes()
+    dia=elegir_dia(turnos_d)
 main()
