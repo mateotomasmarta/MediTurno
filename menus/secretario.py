@@ -1,7 +1,7 @@
 import time
 from funciones.secretario.login import validar_credenciales
 from utils.auxiliares import buscar_por_dni, buscar_por_nombre_o_apellido
-from funciones.secretario.agenda import mostrar_turnos_disponibles, mostrar_turnos_ocupados, mostrar_todos_turnos
+from funciones.secretario.agenda import mostrar_turnos_disponibles, mostrar_turnos_ocupados, mostrar_todos_turnos, imprimir_turno_por_dni
 
 
 def mostrar_menu_secretaria():
@@ -117,7 +117,11 @@ def menu_secretario_principal():
                         pass
                     
                     elif opcion_turno == "2":
+                        dni = input("📋 Ingrese el DNI del paciente: ")
+                        imprimir_turno_por_dni(dni)
+                        id_turno = int(input("➤ Ingrese el ID del turno a eliminar: "))
                         pass
+                        
                         
                     
                     elif opcion_turno == "3":

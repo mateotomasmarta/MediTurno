@@ -1,5 +1,6 @@
 from datos import matriz_turnos
-from utils.auxiliares import obtener_nombre_doctor, obtener_nombre_paciente
+from utils.auxiliares import obtener_nombre_doctor, obtener_nombre_paciente,buscar_por_dni
+
 
 def mostrar_turnos_ocupados():
     print("\n" + "═" * 70)
@@ -19,7 +20,6 @@ def mostrar_turnos_ocupados():
 
 
 def mostrar_turnos_disponibles():
-    """Muestra todos los turnos disponibles."""
     print("\n" + "═" * 70)
     print("📊 TURNOS DISPONIBLES")
     print("═" * 70)
@@ -36,7 +36,6 @@ def mostrar_turnos_disponibles():
     print("\n" + "═" * 70)
 
 def mostrar_todos_turnos():
-    """Muestra todos los turnos, tanto ocupados como disponibles."""
     print("\n" + "═" * 70)
     print("📊 TODOS LOS TURNOS")
     print("═" * 70)
@@ -49,5 +48,33 @@ def mostrar_todos_turnos():
         nombre_doctor = obtener_nombre_doctor(id_doctor)
         estado_emoji = "🔴 OCUPADO" if estado == 'ocupado' else "🟢 DISPONIBLE"
         print(f"{(id_turno):<4} {dia:<9} {hora:<6} {nombre_paciente:<16} {estado_emoji:<12} {nombre_doctor}")
+    
+    print("\n" + "═" * 70)
+    
+
+def imprimir_turno_por_dni(dni):
+    pacientes = buscar_por_dni(dni)
+    
+    if not pacientes:
+        print(f"\n⚠️ No se encontraron pacientes con el DNI: {dni}")
+        return
+
+    print("\n" + "═" * 70)
+    print(f"📋 Turnos encontrados para el DNI: {dni}")
+    print("═" * 70)
+    print("\nID  DÍA       HORA   PACIENTE          ESTADO      DOCTOR")
+    print("-" * 60)
+    
+    for paciente in pacientes:
+        id_paciente = paciente['id']
+        nombre_paciente = f"{paciente['nombre']} {paciente['apellido']}"
+        
+
+        for turno in matriz_turnos:
+            id_turno, dia, hora, turno_id_paciente, estado, id_doctor = turno
+            if turno_id_paciente == id_paciente:
+                nombre_doctor = obtener_nombre_doctor(id_doctor)
+                estado_emoji = "🔴 OCUPADO" if estado == 'ocupado' else "🟢 DISPONIBLE"
+                print(f"{(id_turno):<4} {dia:<9} {hora:<6} {nombre_paciente:<16} {estado_emoji:<12} {nombre_doctor}")
     
     print("\n" + "═" * 70)
