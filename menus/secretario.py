@@ -144,7 +144,7 @@ def menu_secretario_principal():
                         else:
                             print("\n⚠️ Opción inválida!")
                             time.sleep(1)
-                    break
+                    
                 
                 elif opcion_turno == "4":
                     break
