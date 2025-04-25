@@ -93,9 +93,9 @@ def menu_secretario_principal():
         elif opcion == "2":
             print("\n" + "═" * 70)
             print("📊 TODOS LOS TURNOS")
-            mostrar_todos_turnos()
             
             while True:
+                mostrar_todos_turnos()
                 print("\n╔══════════════════════════════════════════╗")
                 print("║        🛠️ GESTIONAR TURNOS               ║")
                 print("╠══════════════════════════════════════════╣")
