@@ -78,3 +78,19 @@ def imprimir_turno_por_dni(dni):
                 print(f"{(id_turno):<4} {dia:<9} {hora:<6} {nombre_paciente:<16} {estado_emoji:<12} {nombre_doctor}")
     
     print("\n" + "═" * 70)
+
+def mostrar_turnosdipo_paciente():
+    print("\n" + "═" * 70)
+    print(f"📊 TURNOS DISPONIBLES")
+    print("═" * 70)
+    print("\nID  DÍA       HORA   ESTADO       ")
+    print("-" * 70)
+
+    for turno in matriz_turnos:
+        id_turno, dia, hora, id_paciente, estado, doctor_turno = turno
+        if estado == 'disponible' :
+
+            # Mostrar turno disponible
+            print(f"{(id_turno):<4} {dia:<9} {hora:<6} 🟢 DISPONIBLE ")
+
+    print("\n" + "═" * 70)
