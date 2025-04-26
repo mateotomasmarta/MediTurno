@@ -29,3 +29,8 @@ def buscar_por_nombre_o_apellido(filtro):
         if filtro in p['nombre'].lower() or filtro in p['apellido'].lower():
             resultados.append(p)
     return resultados
+
+def buscar_valor_por_clave(matriz,clave,clavebuscada):
+    for diccionario in matriz:
+        if diccionario[clave]==clavebuscada:
+            return diccionario
