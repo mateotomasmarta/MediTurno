@@ -72,11 +72,11 @@ def tomar_nombre():
 def buscar_paciente(dni, lista_pacientes):
     # Buscás el paciente según DNI y nombre exacto (todo normalizado)
     dni = dni.strip()  # saco cualquier espacio que joda
-    nombre = normalizar_cadena(nombre)  # paso todo a minúscula por las dudas
+      # paso todo a minúscula por las dudas
 
     for paciente in lista_pacientes:
         # me fijo si coincide dni y nombre en la matriz
-        if paciente['dni'] == dni and normalizar_cadena(paciente['nombre']) == nombre:
+        if paciente['dni'] == dni:
             return paciente  # te devuelve el paciente que encuentra
     return None  # si no encuentra, devuelve None
 
@@ -116,7 +116,7 @@ def lista_registro():
     edad = validar_edad()  # pide edad y valida
     lista_nuevo.insert(4, edad)
 
-    id = generar_nuevo_id(matriz_turnos)
+    id = generar_nuevo_id(matriz_pacientes)
     lista_nuevo.insert(0, id)
 
     return lista_nuevo
@@ -140,7 +140,7 @@ def obtener_turnos_paciente(matriz_turnos, id_paciente):
     return lista_tuplas
 
 
-def validar_turno(dia_turno, hora_turno):
+def validar_turno_disponible(dia_turno, hora_turno):
     # Validar que el turno esté disponible
     turno_valido = False  # Bandera para verificar si el turno es válido
 
@@ -211,7 +211,7 @@ def login_pacientes():
     # arranca el menú principal para pacientes
     # si ya tiene cuenta pedís solo dni, y si no le pedimos todos los datos
     print("\n👨‍⚕️ Bienvenido al módulo de Pacientes 👨‍⚕️")
-    print("¿Ya tenés cuenta? (si/no): ")
+    print("¿Ya tenés cuenta? ")
     tiene_cuenta = validar_si_no()
 
 
@@ -231,7 +231,7 @@ def login_pacientes():
 
         else:
             # Si se encuentra el paciente, obtenés su id a partir del dni
-            id_paciente = obtener_id_por_dni(matriz_turnos, dni)
+            id_paciente = obtener_id_por_dni(matriz_pacientes, dni)
 
             # Buscás y mostrás los turnos
             nombre_pacienteregistrado = obtener_nombre_paciente(id_paciente)
@@ -254,7 +254,7 @@ def login_pacientes():
 
                 time.sleep(3)
 
-                cargar_turno_paciente(diccionario_paciente[id],edad)
+                cargar_turno_paciente(id_paciente,edad)
 
 # =============================================================================
 #PACIENTE NUEVO:
