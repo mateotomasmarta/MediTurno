@@ -7,7 +7,6 @@ def muestra_turnos_ocupados():
    for fila in turno_agendados:
       print(fila)
       print(" ")
-    #muestra los turnos no disponibles( )
    return turno_agendados
 
 def muestra_turnos_disponibes():
@@ -40,8 +39,6 @@ def elegir_turno_a_modificar(turno_agendados):
       
     return id_turno
 
-   
-    #pide que eliga el turno del paciente que desea modificar mediante ingresando el numero de turno (id).( variable que luego mando a funcion modificar turno)
 def elegir_dia (turnos_disponibles):
    
    bandera=True
@@ -61,8 +58,33 @@ def elegir_dia (turnos_disponibles):
        
    return dia_id
 
-def modificar_turno():
-    pass
+def modifica_turno (turno,dia,matriz): 
+    
+   print(matriz)
+   print("")
+
+   for fila in matriz:
+      if fila[0]== turno:
+         paciente= fila[3]
+         doctor= fila[5]
+         estado=fila[4]
+    
+   matriz[dia-1][3]=paciente
+  
+   matriz[dia-1][5]=doctor
+   
+   matriz[dia-1][4]=estado
+  
+
+   matriz[turno-1][3]=None
+   
+   matriz[turno-1][5]=None
+  
+   matriz[turno-1][4]='disponible'
+   
+
+   print (matriz)
+
 
 def main():
     
@@ -72,4 +94,5 @@ def main():
 
     turnos_d=muestra_turnos_disponibes()
     dia=elegir_dia(turnos_d)
+    modifica_turno(turno_a_modificar,dia,matriz_turnos)
 main()
