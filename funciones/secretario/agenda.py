@@ -19,7 +19,7 @@ def mostrar_turnos_ocupados():
     print("\n" + "═" * 70)
 
 
-def mostrar_turnos_disponibles():
+def mostrar_turnos_disponibles_secretaria():
     print("\n" + "═" * 70)
     print("📊 TURNOS DISPONIBLES")
     print("═" * 70)
@@ -78,3 +78,4 @@ def imprimir_turno_por_dni(dni):
                 print(f"{(id_turno):<4} {dia:<9} {hora:<6} {nombre_paciente:<16} {estado_emoji:<12} {nombre_doctor}")
     
     print("\n" + "═" * 70)
+    

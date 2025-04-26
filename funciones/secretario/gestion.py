@@ -14,14 +14,7 @@ def vaciar_turno(matriz):
     print(f"⚠️ No se encontró un turno con el ID {turno_vaciar}.")
             
     
-def eliminar_turno(matriz_t):
-    turno_eliminar = int(input("ingrese el id del turno a eliminar"))
-    variable= 1 
-    while variable == 1:
-        for i in range (len(matriz_t)):
-            if matriz_t [i][0] == turno_eliminar:
-                del matriz_t[i]
-                variable= 0
+
 
 
 

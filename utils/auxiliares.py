@@ -29,3 +29,30 @@ def buscar_por_nombre_o_apellido(filtro):
         if filtro in p['nombre'].lower() or filtro in p['apellido'].lower():
             resultados.append(p)
     return resultados
+
+
+
+#====================================================
+#PACIENTES
+#====================================================
+def buscar_paciente(dni, lista_pacientes):
+    dni = dni.strip() 
+    for paciente in lista_pacientes:
+        if paciente['dni'] == dni:
+            return paciente 
+    return None 
+
+def obtener_id_por_dni(mpacientes, dni_buscado):
+    # Busca en la matriz de pacientes el paciente cuyo dni coincida y devuelve el paciente_id
+    resultado = list(filter(lambda p: p['dni'] == dni_buscado, mpacientes))
+    if resultado:
+        return resultado[0]['id']
+    else:
+        return None
+
+
+def generar_nuevo_id(matriz_pacientes):
+    """Genera un nuevo ID para pacientes basado en el máximo ID existente"""
+    if not matriz_pacientes:  # Si la lista está vacía
+        return 1
+    return max(paciente['id'] for paciente in matriz_pacientes) + 1

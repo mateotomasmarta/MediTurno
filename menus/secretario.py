@@ -1,9 +1,10 @@
 import time
 from funciones.secretario.login import validar_credenciales
 from utils.auxiliares import buscar_por_dni, buscar_por_nombre_o_apellido
-from funciones.secretario.agenda import mostrar_turnos_disponibles, mostrar_turnos_ocupados, mostrar_todos_turnos, imprimir_turno_por_dni
+from funciones.secretario.agenda import mostrar_turnos_disponibles_secretaria, mostrar_turnos_ocupados, mostrar_todos_turnos, imprimir_turno_por_dni
 from datos import matriz_turnos
 from funciones.secretario.gestion import vaciar_turno
+
 
 def mostrar_menu_secretaria():
     """Menú de secretaría con sistema de login"""
@@ -138,13 +139,13 @@ def menu_secretario_principal():
                         if opcion_filtro == "1":
                             mostrar_turnos_ocupados()
                         elif opcion_filtro == "2":
-                            mostrar_turnos_disponibles()
+                            mostrar_turnos_disponibles_secretaria()
                         elif opcion_filtro == "3":
                             break
                         else:
                             print("\n⚠️ Opción inválida!")
                             time.sleep(1)
-                    break
+                    
                 
                 elif opcion_turno == "4":
                     break
