@@ -34,17 +34,20 @@ def lista_registro():
     print("BIENVENIDO! Te pediremos tus datos para registrarte como paciente")
     print("=" * 70)
 
-    nombre , apellido = tomar_nombre()  # pide nombre y valida
-    lista_nuevo.insert(2, nombre)
-    lista_nuevo.insert(3, apellido)
     
-    dni = validar_dni() # Valida el DNI
-    lista_nuevo.insert(1, dni)  # Insertar el DNI válido en la lista
+    dni = validar_dni()  
+    lista_nuevo.append(dni) 
+    # Pedir y validar el nombre y apellido
+    nombre, apellido = tomar_nombre()  # pide nombre y valida
+    lista_nuevo.append(nombre)  # Se agrega nombre en la posición 1
+    lista_nuevo.append(apellido)  # Se agrega apellido en la posición 2
 
-    edad = validar_edad()  # pide edad y valida
-    lista_nuevo.insert(4, edad)
+    # Pedir y validar la edad
+    edad = validar_edad()  # Pide y valida la edad
+    lista_nuevo.append(edad)  # Se agrega la edad en la posición 3
 
-    id = generar_nuevo_id(matriz_pacientes)
-    lista_nuevo.insert(0, id)
+    # Generar un nuevo ID
+    id = generar_nuevo_id(matriz_pacientes)  # Genera un nuevo ID
+    lista_nuevo.insert(0, id)  # Se inserta el ID en la posición 0
 
-    return lista_nuevo# Devolvemos una tupla con nombre y apellido
+    return lista_nuevo  # Devolvemos la lista con los datos
