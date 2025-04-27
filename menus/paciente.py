@@ -22,7 +22,7 @@ def autenticar_paciente():
         opcion = input("\n➤ Seleccione una opción [1-3]: ").strip()
         
         if opcion == "1":
-            dni = input("\nIngrese su DNI: ").strip()
+            dni = validar_dni()
             paciente = buscar_paciente(dni, matriz_pacientes)
             
             if paciente:
