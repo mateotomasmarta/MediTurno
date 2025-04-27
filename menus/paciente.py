@@ -46,19 +46,23 @@ def autenticar_paciente():
             print("\n⚠️ Opción inválida. Por favor intente nuevamente.")
 
 def registrar_paciente():
-  """Maneja el proceso de registro de nuevos pacientes"""
+    """Maneja el proceso de registro de nuevos pacientes"""
     print("\n" + "═" * 50)
     print("📝 REGISTRO DE NUEVO PACIENTE")
     print("═" * 50)
     
-    nuevo_paciente = lista_registro()
+    nuevo_paciente = lista_registro()  
     
     claves = ['id', 'dni', 'nombre', 'apellido', 'edad']
-    nuevo_diccionario = dict(zip(claves, lista_nuevo))
-    matriz_pacientes.append(nuevo_diccionario)
+    nuevo_diccionario = dict(zip(claves, nuevo_paciente)) 
+    
+    matriz_pacientes.append(nuevo_diccionario) 
 
-    print(f"\n✅ Registro exitoso! Bienvenido/a {paciente_dict['nombre']} {paciente_dict['apellido']}")
-    return paciente_dict
+    
+    print(f"\n✅ Registro exitoso! Bienvenido/a {nuevo_diccionario['nombre']} {nuevo_diccionario['apellido']}")
+    
+    return nuevo_diccionario  # Devuelve el diccionario recién creado
+
 
       
 
