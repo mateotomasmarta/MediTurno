@@ -1,4 +1,4 @@
-from utils.validaciones import validar_edad, validar_dni
+from utils.validaciones import validar_edad, validar_dni, pedir_dni
 from utils.auxiliares import generar_nuevo_id
 from datos import matriz_pacientes
 
@@ -38,8 +38,17 @@ def lista_registro():
     lista_nuevo.insert(2, nombre)
     lista_nuevo.insert(3, apellido)
 
-    dni = validar_dni()  # pide dni y valida
-    lista_nuevo.insert(1, dni)
+    bandera1 = 0
+    while bandera1 == 0:
+        dni1 = pedir_dni()      # Pide el DNI
+        dni = validar_dni(dni1) # Valida el DNI
+    
+        if dni != 0:
+            bandera1 = 1
+            lista_nuevo.insert(1, dni)  # Insertar el DNI válido en la lista
+        else:
+            print("⚠️ El DNI ingresado no es válido. Intente de nuevo.")
+
 
     edad = validar_edad()  # pide edad y valida
     lista_nuevo.insert(4, edad)

@@ -1,7 +1,16 @@
 from datos import matriz_turnos
-def validar_dni():
-    dni = input("ingresá tu DNI (importante respetar la cantidad de digitos y no agregar letras ni guiones): ")
-    return dni.isdigit() and 7 <= len(dni) <= 8
+def validar_dni(dni):
+    var= 0
+    if dni.isdigit() and 7 <= len(dni) <= 8:
+        var= dni
+    else:
+        var=0
+    return var
+
+
+def pedir_dni():
+    documento = input("ingresá tu DNI (importante respetar la cantidad de digitos y no agregar letras ni guiones): ")
+    return documento
 
 def validar_edad():
     while True:
