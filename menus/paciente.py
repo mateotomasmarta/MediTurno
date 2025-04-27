@@ -46,28 +46,21 @@ def autenticar_paciente():
             print("\n⚠️ Opción inválida. Por favor intente nuevamente.")
 
 def registrar_paciente():
-    """Maneja el proceso de registro de nuevos pacientes"""
+  """Maneja el proceso de registro de nuevos pacientes"""
     print("\n" + "═" * 50)
     print("📝 REGISTRO DE NUEVO PACIENTE")
     print("═" * 50)
     
-    # Utilizamos la función de registro existente
     nuevo_paciente = lista_registro()
     
-    # Convertimos la lista a diccionario para consistencia
-    paciente_dict = {
-        'id': nuevo_paciente[0],
-        'dni': nuevo_paciente[1],
-        'nombre': nuevo_paciente[2],
-        'apellido': nuevo_paciente[3],
-        'edad': nuevo_paciente[4]
-    }
-    
-    # Agregamos el nuevo paciente a la matriz (esto debería hacerse en datos.py)
-    matriz_pacientes.append(paciente_dict)
-    
+    claves = ['id', 'dni', 'nombre', 'apellido', 'edad']
+    nuevo_diccionario = dict(zip(claves, lista_nuevo))
+    matriz_pacientes.append(nuevo_diccionario)
+
     print(f"\n✅ Registro exitoso! Bienvenido/a {paciente_dict['nombre']} {paciente_dict['apellido']}")
     return paciente_dict
+
+      
 
 def mostrar_menu_pacientes():
     """Menú principal para pacientes autenticados"""
