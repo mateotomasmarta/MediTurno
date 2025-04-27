@@ -1,11 +1,17 @@
 from datos import matriz_turnos
-def validar_dni(dni):
-    var= 0
-    if dni.isdigit() and 7 <= len(dni) <= 8:
-        var= dni
-    else:
-        var=0
-    return var
+
+def validar_dni():
+    bandera = True
+    while bandera == True:
+        dni = input("Ingresá tu DNI (7 u 8 dígitos, solo números, sin guiones ni letras): ").strip()
+        
+        if not dni.isdigit():
+            print("❌ El DNI debe contener solo números.")
+        elif not (7 <= len(dni) <= 8):
+            print("❌ El DNI debe tener entre 7 y 8 dígitos.")
+        else:
+            bandera = False
+            return dni  
 
 
 def pedir_dni():
