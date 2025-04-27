@@ -3,7 +3,7 @@ from funciones.secretario.login import validar_credenciales
 from utils.auxiliares import buscar_por_dni, buscar_por_nombre_o_apellido
 from funciones.secretario.agenda import mostrar_turnos_disponibles_secretaria, mostrar_turnos_ocupados, mostrar_todos_turnos, imprimir_turno_por_dni
 from datos import matriz_turnos
-from funciones.secretario.gestion import vaciar_turno
+from funciones.secretario.gestion import vaciar_turno,elegir_turno_a_modificar, elegir_dia, modifica_turno
 
 
 def mostrar_menu_secretaria():
@@ -111,7 +111,16 @@ def menu_secretario_principal():
                 opcion_turno = input("➤ Seleccione una opción [1-4]: ")
                 
                 if opcion_turno == "1":
-                    pass
+                    while True:
+                        mostrar_turnos_ocupados()
+                        turnos_a_modificar = elegir_turno_a_modificar(matriz_turnos)
+                        turnos_d=mostrar_turnos_disponibles_secretaria()
+                        dia=elegir_dia(turnos_d)
+                        modifica_turno(turnos_a_modificar, dia, matriz_turnos)
+                        opcion = input("➤ ¿Desea modificar otro turno? (si/no): ").lower()
+                        if opcion != "si":
+                            break
+                    
                 
                 elif opcion_turno == "2":
                     while True:

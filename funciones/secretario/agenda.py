@@ -26,14 +26,17 @@ def mostrar_turnos_disponibles_secretaria():
     print("\nID  DÍA       HORA   PACIENTE          ESTADO      DOCTOR")
     print("-" * 60)
     
+    turnos_disponibles = []  # Lista para almacenar los turnos disponibles
     for turno in matriz_turnos:
         id_turno, dia, hora, id_paciente, estado, id_doctor = turno
         if estado == 'disponible':
             nombre_paciente = obtener_nombre_paciente(id_paciente)
             nombre_doctor = obtener_nombre_doctor(id_doctor)
             print(f"{(id_turno):<4} {dia:<9} {hora:<6} {nombre_paciente:<16} 🟢 DISPONIBLE {nombre_doctor}")
+            turnos_disponibles.append(turno)  # Agregar el turno disponible a la lista
     
     print("\n" + "═" * 70)
+    return turnos_disponibles  # Retornar la lista de turnos disponibles
 
 def mostrar_todos_turnos():
     print("\n" + "═" * 70)
@@ -78,4 +81,3 @@ def imprimir_turno_por_dni(dni):
                 print(f"{(id_turno):<4} {dia:<9} {hora:<6} {nombre_paciente:<16} {estado_emoji:<12} {nombre_doctor}")
     
     print("\n" + "═" * 70)
-    
