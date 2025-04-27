@@ -37,18 +37,9 @@ def lista_registro():
     nombre , apellido = tomar_nombre()  # pide nombre y valida
     lista_nuevo.insert(2, nombre)
     lista_nuevo.insert(3, apellido)
-
-    bandera1 = 0
-    while bandera1 == 0:
-        dni1 = validar_dni()      # Pide el DNI
-        dni = validar_dni(dni1) # Valida el DNI
     
-        if dni != 0:
-            bandera1 = 1
-            lista_nuevo.insert(1, dni)  # Insertar el DNI válido en la lista
-        else:
-            print("⚠️ El DNI ingresado no es válido. Intente de nuevo.")
-
+    dni = validar_dni() # Valida el DNI
+    lista_nuevo.insert(1, dni)  # Insertar el DNI válido en la lista
 
     edad = validar_edad()  # pide edad y valida
     lista_nuevo.insert(4, edad)
