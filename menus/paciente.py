@@ -35,7 +35,12 @@ def autenticar_paciente():
                     return registrar_paciente()
         
         elif opcion == "2":
-            return registrar_paciente()
+            resultado = registrar_paciente()
+            if resultado is None:
+                print("🔙 Volviendo al inicio...")
+                autenticar_paciente()
+
+            
         
         elif opcion == "3":
             print("\n🔙 Volviendo al menú principal...")
@@ -56,12 +61,19 @@ def registrar_paciente():
     claves = ['id', 'dni', 'nombre', 'apellido', 'edad']
     nuevo_diccionario = dict(zip(claves, nuevo_paciente)) 
     
+    # Verificamos si el paciente ya está registrado por su DNI
+    for paciente in matriz_pacientes:
+        if paciente['dni'] == nuevo_diccionario['dni']:
+            print(f"⚠️ Ya existe un paciente registrado con el DNI {nuevo_diccionario['dni']}. No se puede registrar nuevamente.")
+            return None  # Devolvemos None si ya está registrado
+    
+    # Si no está registrado, lo agregamos a la matriz
     matriz_pacientes.append(nuevo_diccionario) 
 
-    
     print(f"\n✅ Registro exitoso! Bienvenido/a {nuevo_diccionario['nombre']} {nuevo_diccionario['apellido']}")
     
     return nuevo_diccionario  # Devuelve el diccionario recién creado
+  # Devuelve el diccionario recién creado
 
 
       
