@@ -1,4 +1,4 @@
-from utils.validaciones import validar_edad, validar_dni, pedir_dni
+from utils.validaciones import validar_edad, validar_dni
 from utils.auxiliares import generar_nuevo_id
 from datos import matriz_pacientes
 
@@ -40,7 +40,7 @@ def lista_registro():
 
     bandera1 = 0
     while bandera1 == 0:
-        dni1 = pedir_dni()      # Pide el DNI
+        dni1 = validar_dni()      # Pide el DNI
         dni = validar_dni(dni1) # Valida el DNI
     
         if dni != 0:
