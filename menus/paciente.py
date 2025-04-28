@@ -1,5 +1,5 @@
 import time
-from utils.validaciones import validar_si_no, validar_dni,validar_edad
+from utils.validaciones import validar_dni
 from datos import matriz_pacientes, matriz_turnos
 from utils.auxiliares import buscar_paciente, obtener_id_por_dni,obtener_nombre_paciente
 from funciones.pacientes.registro import lista_registro
@@ -27,7 +27,7 @@ def autenticar_paciente():
             
             if paciente:
                 print(f"\nBienvenido/a {paciente['nombre']} {paciente['apellido']}!")
-                return paciente  # Devuelve el diccionario del paciente
+                return paciente  
             else:
                 print("\n⚠️ No se encontró un paciente con ese DNI.")
                 print("¿Desea registrarse? (s/n)")
@@ -45,6 +45,7 @@ def autenticar_paciente():
         elif opcion == "3":
             print("\n🔙 Volviendo al menú principal...")
             time.sleep(1)
+            break
 
         
         else:
@@ -61,32 +62,29 @@ def registrar_paciente():
     claves = ['id', 'dni', 'nombre', 'apellido', 'edad']
     nuevo_diccionario = dict(zip(claves, nuevo_paciente)) 
     
-    # Verificamos si el paciente ya está registrado por su DNI
     for paciente in matriz_pacientes:
         if paciente['dni'] == nuevo_diccionario['dni']:
             print(f"⚠️ Ya existe un paciente registrado con el DNI {nuevo_diccionario['dni']}. No se puede registrar nuevamente.")
-            return None  # Devolvemos None si ya está registrado
+            return None  
     
-    # Si no está registrado, lo agregamos a la matriz
     matriz_pacientes.append(nuevo_diccionario) 
 
     print(f"\n✅ Registro exitoso! Bienvenido/a {nuevo_diccionario['nombre']} {nuevo_diccionario['apellido']}")
-    
-    return nuevo_diccionario  # Devuelve el diccionario recién creado
-  # Devuelve el diccionario recién creado
+    print("⚠️ Porfavor inicie sesion con su DNI para acceder al sistema.")
+    print("🔙 Volviendo al menú de login...")
+    return nuevo_diccionario 
 
 
-      
 
 def mostrar_menu_pacientes():
     """Menú principal para pacientes autenticados"""
     paciente_actual = autenticar_paciente()
     
     if not paciente_actual:
-        return  # Regresa al menú principal
+        return  
     
     while True:
-        # Obtener nombre completo correctamente
+
         nombre_completo = f"{paciente_actual['nombre']} {paciente_actual['apellido']}"
         
         print("\n" + "═" * 50)

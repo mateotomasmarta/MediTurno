@@ -1,14 +1,12 @@
-from datos import matriz_medicos, matriz_pacientes
-
 
 def vaciar_turno(matriz):
 
     turno_vaciar = int(input("Ingrese el ID del turno a vaciar: "))
     for i in range(len(matriz)):
-        if matriz[i][0] == turno_vaciar:  # Busca el turno por ID
-            matriz[i][3] = None  # Elimina el ID del paciente
-            matriz[i][4] = 'disponible'  # Cambia el estado a disponible
-            matriz[i][5] = None  # Elimina el ID del doctor
+        if matriz[i][0] == turno_vaciar:  
+            matriz[i][3] = None  
+            matriz[i][4] = 'disponible'  
+            matriz[i][5] = None  
             print(f"✅ Turno con ID {turno_vaciar} marcado como disponible.")
             return
     print(f"⚠️ No se encontró un turno con el ID {turno_vaciar}.")
@@ -51,24 +49,20 @@ def elegir_dia (turnos_disponibles):
 
 def modifica_turno(turno, dia, matriz): 
     
-    # Buscar los datos del turno a modificar
     for fila in matriz:
         if fila[0] == turno:
             paciente = fila[3]
             doctor = fila[5]
             estado = fila[4]
     
-    # Asignar los datos al nuevo turno seleccionado
     matriz[dia-1][3] = paciente
     matriz[dia-1][5] = doctor
     matriz[dia-1][4] = estado
 
-    # Liberar el turno anterior
     matriz[turno-1][3] = None
     matriz[turno-1][5] = None
     matriz[turno-1][4] = 'disponible'
 
-    # Mensaje de confirmación
     print("✅ El turno ha sido modificado correctamente.")
 
 

@@ -43,7 +43,6 @@ def buscar_paciente(dni, lista_pacientes):
     return None 
 
 def obtener_id_por_dni(mpacientes, dni_buscado):
-    # Busca en la matriz de pacientes el paciente cuyo dni coincida y devuelve el paciente_id
     resultado = list(filter(lambda p: p['dni'] == dni_buscado, mpacientes))
     if resultado:
         return resultado[0]['id']
@@ -53,6 +52,6 @@ def obtener_id_por_dni(mpacientes, dni_buscado):
 
 def generar_nuevo_id(matriz_pacientes):
     """Genera un nuevo ID para pacientes basado en el máximo ID existente"""
-    if not matriz_pacientes:  # Si la lista está vacía
+    if not matriz_pacientes: 
         return 1
     return max(paciente['id'] for paciente in matriz_pacientes) + 1

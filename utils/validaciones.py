@@ -32,31 +32,24 @@ def validar_edad():
 
 def validar_turno_disponible(dia_turno, hora_turno):
     turno_valido = False  
-    # Compara el día y la hora con los datos de la matriz de turnos
     for i in range(len(matriz_turnos)):
-        # Desempaquetamos la fila de la matriz para obtener los valores
         id_turno, dia, hora, id_paciente_turno, estado, id_doctor = matriz_turnos[i]
-        # Compara si el día y la hora coinciden con los ingresados por el paciente
         if dia == dia_turno and hora == hora_turno:
-            # Verifica si el turno está disponible
             if estado == 'disponible':
-                turno_valido = True # El turno es válido y disponible
+                turno_valido = True 
                 print(f"Turno disponible: {dia_turno} a las {hora_turno}")
             else:
-                # El turno está ocupado
                 print(f"Lo siento, el turno para {dia_turno} a las {hora_turno} ya está ocupado.")
-            break  # Ya encontramos el turno, no es necesario seguir buscando
+            break 
 
-    # Si no se encontró un turno válido, informamos al paciente
     if not turno_valido:
         print(f"No se encontró un turno disponible para el día {dia_turno} y la hora {hora_turno}.")
-    
     return turno_valido
 
 def validar_si_no():
     while True:
         respuesta = input("Por favor ingresa 'si' o 'no' (sin comillas): ").strip().lower()  # Se normaliza a minúsculas
-        if respuesta == "si" or respuesta == "no":  # Validamos si es "si" o "no"
-            return respuesta  # Si es válido, lo retornamos
+        if respuesta == "si" or respuesta == "no":  
+            return respuesta  
         else:
             print("⚠️ Respuesta inválida. Por favor, ingresa solo 'si' o 'no'.")
