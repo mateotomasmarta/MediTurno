@@ -41,3 +41,26 @@ def lista_registro():
     id = generar_nuevo_id(matriz_pacientes)  
     lista_nuevo.insert(0, id)  
     return lista_nuevo  
+
+def registrar_paciente():
+    """Maneja el proceso de registro de nuevos pacientes"""
+    print("\n" + "═" * 50)
+    print("📝 REGISTRO DE NUEVO PACIENTE")
+    print("═" * 50)
+    
+    nuevo_paciente = lista_registro()  
+    
+    claves = ['id', 'dni', 'nombre', 'apellido', 'edad']
+    nuevo_diccionario = dict(zip(claves, nuevo_paciente)) 
+    
+    for paciente in matriz_pacientes:
+        if paciente['dni'] == nuevo_diccionario['dni']:
+            print(f"⚠️ Ya existe un paciente registrado con el DNI {nuevo_diccionario['dni']}. No se puede registrar nuevamente.")
+            return None  
+    
+    matriz_pacientes.append(nuevo_diccionario) 
+
+    print(f"\n✅ Registro exitoso! Bienvenido/a {nuevo_diccionario['nombre']} {nuevo_diccionario['apellido']}")
+    print("⚠️ Porfavor inicie sesion con su DNI para acceder al sistema.")
+    print("🔙 Volviendo al menú de login...")
+    return nuevo_diccionario 

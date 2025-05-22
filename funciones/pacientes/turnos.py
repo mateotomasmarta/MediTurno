@@ -1,4 +1,6 @@
-from datos import matriz_turnos
+from datos import matriz_turnos, matriz_pacientes
+from utils.auxiliares import buscar_paciente, obtener_id_por_dni, obtener_nombre_paciente
+
 from utils.validaciones import validar_turno_disponible
 
 def obtener_turnos_paciente(matriz_turnos, id_paciente):
@@ -43,6 +45,7 @@ def cargar_turno_paciente(id_paciente, edad_paciente):
                         matriz_turnos[i][5] = 1
                     print(f" 🟢 ¡Turno asignado con éxito! Tu turno es el {dia_turno} a las {hora_turno}.")
                     break
+                
 def mostrar_turnosdipo_paciente():
     print("\n" + "═" * 70)
     print(f"📊 TURNOS DISPONIBLES")
@@ -57,3 +60,29 @@ def mostrar_turnosdipo_paciente():
             print(f"{(id_turno):<4} {dia:<9} {hora:<6} 🟢 DISPONIBLE ")
 
     print("\n" + "═" * 70)
+
+def ver_mis_turnos(dni_paciente):
+    """Muestra los turnos del paciente actual"""
+    id_paciente = obtener_id_por_dni(matriz_pacientes, dni_paciente)
+    if not id_paciente:
+        print("\n⚠️ No se encontró paciente con ese DNI")
+        return
+    
+    turnos = obtener_turnos_paciente(matriz_turnos, id_paciente)
+    
+    print("\n" + "═" * 50)
+    print(f"📅 TURNOS DE {obtener_nombre_paciente(id_paciente).upper()}")
+    print("═" * 50)
+    
+    if turnos == "No tiene aún turnos asignados.":
+        print("\nℹ️ No tienes turnos asignados.")
+    else:
+        print("\nID  DÍA        HORA     ESTADO")
+        print("-" * 30)
+        for turno in matriz_turnos:
+            if turno[3] == id_paciente:
+                estado = "🔴 OCUPADO" if turno[4] == 'ocupado' else "🟢 DISPONIBLE"
+                print(f"{turno[0]:<3} {turno[1]:<10} {turno[2]:<8} {estado}")
+    
+    print("\n" + "═" * 50)
+    input("\n⏎ Presione Enter para continuar...")
