@@ -17,13 +17,20 @@ def obtener_turnos_paciente(matriz_turnos, id_paciente):
 def cargar_turno_paciente(id_paciente, edad_paciente):
     print("Por favor, selecciona un día y una hora para tu turno.")
     
-    dias_validos = ["lunes", "miércoles", "viernes"]
+    dias_validos = {1: "lunes", 2: "miércoles", 3: "viernes"}
     horas_validas = ["08:00", "09:00", "16:00", "10:00", "11:00", "13:00", "15:00", "18:00"]
 
-    dia_turno = input("Día (lunes, miércoles, viernes): ").strip().lower()
-    while dia_turno not in dias_validos:
-        print(" ⚠️ Día inválido. Por favor, ingresa un día válido (lunes, miércoles, viernes).")
-        dia_turno = input("Día (lunes, miércoles, viernes): ").strip().lower()
+    # Selección del día
+    print("Días disponibles:")
+    for key, value in dias_validos.items():
+        print(f"{key} = {value.capitalize()}")
+    
+    dia_turno_num = input("Selecciona el número del día (1, 2, 3): ").strip()
+    while not dia_turno_num.isdigit() or int(dia_turno_num) not in dias_validos:
+        print(" ⚠️ Opción inválida. Por favor, selecciona un número válido (1, 2, 3).")
+        dia_turno_num = input("Selecciona el número del día (1, 2, 3): ").strip()
+    
+    dia_turno = dias_validos[int(dia_turno_num)]
 
     # Validación de la hora
     hora_turno = input("Hora (ejemplo: 08:00, 09:00, 16:00): ").strip()
@@ -45,7 +52,6 @@ def cargar_turno_paciente(id_paciente, edad_paciente):
                         matriz_turnos[i][5] = 1
                     print(f" 🟢 ¡Turno asignado con éxito! Tu turno es el {dia_turno} a las {hora_turno}.")
                     break
-                
 def mostrar_turnosdipo_paciente():
     print("\n" + "═" * 70)
     print(f"📊 TURNOS DISPONIBLES")
