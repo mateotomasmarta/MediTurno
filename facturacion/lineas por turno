@@ -1,1 +1,9 @@
 
+#la facturacion la hacemos segun la matriz turnos y cada linea del archivo de texto tiene el id del cliente 
+# y los datos de la factura segun el turno asi siempre lo que se arma es una factura para cada turno 
+#dentro de cada turna hay un id del paciente que la sacas de la matriz del turno y es la que si necesitas hacer una subfactiura con los datos del 
+#paciente vas al id del paciente y con ese dato sacas la info de la matriz paciente
+#metes slicing en facturacion
+
+
+
