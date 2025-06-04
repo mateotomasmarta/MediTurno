@@ -4,6 +4,7 @@ def cargar_matriz_en_archivos (matriz, archivo):
         lineas= [f"{ID_TURNO};{DIA};{HORARIO};{ID_PACIENTE};{ESTADO};{ID_DOCTOR}\n" for ID_TURNO, DIA, HORARIO, ID_PACIENTE, ESTADO, ID_DOCTOR in matriz]
         arch= open(archivo,"w", encoding="UTF-8")
         arch.writelines(lineas)
+        return arch
     except OSError as mensaje:
         print("no se puede grabar el archivo", mensaje)
     finally:
@@ -12,4 +13,4 @@ def cargar_matriz_en_archivos (matriz, archivo):
         except NameError:
             pass
 
-cargar_matriz_en_archivos(matriz_turnos , 'matrices.txt') 
+cargar_matriz_en_archivos(matriz_turnos , 'matrices.txt')
