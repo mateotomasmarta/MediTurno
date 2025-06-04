@@ -1,10 +1,12 @@
 from utils.validaciones import validar_edad, validar_dni
 from utils.auxiliares import generar_nuevo_id
-from datos import matriz_pacientes
+from db.funciones.archivos_json import cargar_archivo_pacientes,guardar_archivo_pacientes
+import json
+RUTA_PACIENTES = 'db/datos.json'
 
 def tomar_nombre():
     bandera = True
-    while bandera == True:
+    while bandera:
         try:
             entrada = input("Ingresá solo tu primer nombre y primer apellido: ").strip()
             partes = entrada.split()
@@ -32,6 +34,7 @@ def lista_registro():
     print("=" * 70)
 
     try:
+        pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)
         dni = validar_dni()  
         lista_nuevo.append(dni) 
         nombre, apellido = tomar_nombre()  
@@ -41,7 +44,7 @@ def lista_registro():
         edad = validar_edad() 
         lista_nuevo.append(edad)  
 
-        id = generar_nuevo_id(matriz_pacientes)  
+        id = generar_nuevo_id()  # Ahora generar_nuevo_id debe leer del JSON
         lista_nuevo.insert(0, id)  
         return lista_nuevo  
     except Exception as e:
@@ -63,12 +66,14 @@ def registrar_paciente():
         claves = ['id', 'dni', 'nombre', 'apellido', 'edad']
         nuevo_diccionario = dict(zip(claves, nuevo_paciente)) 
         
-        for paciente in matriz_pacientes:
+        pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)
+        for paciente in pacientes:
             if paciente['dni'] == nuevo_diccionario['dni']:
                 print(f"⚠️ Ya existe un paciente registrado con el DNI {nuevo_diccionario['dni']}. No se puede registrar nuevamente.")
                 return None  
         
-        matriz_pacientes.append(nuevo_diccionario) 
+        pacientes.append(nuevo_diccionario)
+        guardar_archivo_pacientes(pacientes)
 
         print(f"\n✅ Registro exitoso! Bienvenido/a {nuevo_diccionario['nombre']} {nuevo_diccionario['apellido']}")
         print("⚠️ Porfavor inicie sesion con su DNI para acceder al sistema.")

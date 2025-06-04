@@ -1,7 +1,8 @@
-from datos import matriz_turnos, matriz_pacientes
+from datos import matriz_turnos
 from utils.auxiliares import buscar_paciente, obtener_id_por_dni, obtener_nombre_paciente
-
+from db.funciones.archivos_json import cargar_archivo_pacientes
 from utils.validaciones import validar_turno_disponible
+RUTA_PACIENTES = 'db/datos.json'
 
 def obtener_turnos_paciente(matriz_turnos, id_paciente):
     
@@ -52,6 +53,7 @@ def cargar_turno_paciente(id_paciente, edad_paciente):
                         matriz_turnos[i][5] = 1
                     print(f" 🟢 ¡Turno asignado con éxito! Tu turno es el {dia_turno} a las {hora_turno}.")
                     break
+
 def mostrar_turnosdipo_paciente():
     print("\n" + "═" * 70)
     print(f"📊 TURNOS DISPONIBLES")
@@ -69,7 +71,8 @@ def mostrar_turnosdipo_paciente():
 
 def ver_mis_turnos(dni_paciente):
     """Muestra los turnos del paciente actual"""
-    id_paciente = obtener_id_por_dni(matriz_pacientes, dni_paciente)
+    pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)
+    id_paciente = obtener_id_por_dni(pacientes, dni_paciente)
     if not id_paciente:
         print("\n⚠️ No se encontró paciente con ese DNI")
         return

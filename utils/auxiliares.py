@@ -1,23 +1,26 @@
-from datos import *
+from db.funciones.archivos_json import *
+from datos import matriz_medicos
+RUTA_PACIENTES = 'db/datos.json'
+
 def obtener_nombre_doctor(id_doctor):
-    """Devuelve el nombre del doctor dado su ID."""
-    if id_doctor is not None:
-        for d in matriz_medicos:
-            if d[0] == id_doctor:
-                return d[1]
-    return "---"
+    for doctor in matriz_medicos:
+        if doctor[0] == id_doctor:
+            return f"{doctor[1]} {doctor[2]}"
+    return "Sin asignar"
+
 
 def obtener_nombre_paciente(id_paciente):
-    """Devuelve el nombre completo del paciente dado su ID."""
     if id_paciente is not None:
-        for p in matriz_pacientes:
+        pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)
+        for p in pacientes:
             if p['id'] == id_paciente:
                 return f"{p['nombre']} {p['apellido']}"
     return "---"
 
 def buscar_por_dni(dni):
     resultados = []
-    for p in matriz_pacientes:
+    pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)
+    for p in pacientes:
         if p['dni'].startswith(dni):
             resultados.append(p)
     return resultados
@@ -25,33 +28,29 @@ def buscar_por_dni(dni):
 def buscar_por_nombre_o_apellido(filtro):
     resultados = []
     filtro = filtro.lower()
-    for p in matriz_pacientes:
+    pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)
+    for p in pacientes:
         if filtro in p['nombre'].lower() or filtro in p['apellido'].lower():
             resultados.append(p)
     return resultados
 
-
-
-#====================================================
-#PACIENTES
-#====================================================
-def buscar_paciente(dni, lista_pacientes):
-    dni = dni.strip() 
-    for paciente in lista_pacientes:
+def buscar_paciente(dni, pacientes):
+    dni = dni.strip()
+    for paciente in pacientes:
         if paciente['dni'] == dni:
-            return paciente 
-    return None 
+            return paciente
+    return None
 
-def obtener_id_por_dni(mpacientes, dni_buscado):
-    resultado = list(filter(lambda p: p['dni'] == dni_buscado, mpacientes))
+def obtener_id_por_dni(dni_buscado):
+    pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)
+    resultado = list(filter(lambda p: p['dni'] == dni_buscado, pacientes))
     if resultado:
         return resultado[0]['id']
     else:
         return None
 
-
-def generar_nuevo_id(matriz_pacientes):
-    """Genera un nuevo ID para pacientes basado en el máximo ID existente"""
-    if not matriz_pacientes: 
+def generar_nuevo_id():
+    pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)
+    if not pacientes:
         return 1
-    return max(paciente['id'] for paciente in matriz_pacientes) + 1
+    return max(paciente['id'] for paciente in pacientes) + 1

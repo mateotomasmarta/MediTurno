@@ -1,12 +1,10 @@
 import time
 from utils.validaciones import validar_dni
-from datos import matriz_pacientes, matriz_turnos
 from utils.auxiliares import buscar_paciente, obtener_id_por_dni,obtener_nombre_paciente
 from funciones.pacientes.registro import lista_registro, registrar_paciente
 from funciones.pacientes.turnos import obtener_turnos_paciente, cargar_turno_paciente, mostrar_turnosdipo_paciente, ver_mis_turnos
-
-
-
+from db.funciones.archivos_json import cargar_archivo_pacientes, guardar_archivo_pacientes
+RUTA_PACIENTES = 'db/datos.json'
 def autenticar_paciente():
     """Maneja el proceso de login/registro de pacientes"""
     print("\n" + "═" * 50)
@@ -25,7 +23,8 @@ def autenticar_paciente():
             if opcion == "1":
                 try:
                     dni = validar_dni()
-                    paciente = buscar_paciente(dni, matriz_pacientes)
+                    pacientes= cargar_archivo_pacientes(RUTA_PACIENTES)
+                    paciente = buscar_paciente(dni, pacientes)
                     
                     if paciente:
                         print(f"\nBienvenido/a {paciente['nombre']} {paciente['apellido']}!")
