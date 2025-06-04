@@ -1,3 +1,41 @@
+matriz_pacientes = [
+    {
+        'id': 1,
+        'dni': '30123456',
+        'nombre': 'Ana',
+        'apellido': 'Gómez',
+        'edad': 28
+    },
+    {
+        'id': 2,
+        'dni': '28987654',
+        'nombre': 'Carlos',
+        'apellido': 'López',
+        'edad': 35
+    },
+    {
+        'id': 3,
+        'dni': '35123456',
+        'nombre': 'Carolina',
+        'apellido': 'Sánchez',
+        'edad': 42
+    },
+    {
+        'id': 4,
+        'dni': '53233456',
+        'nombre': 'Lautaro',
+        'apellido': 'Gomez',
+        'edad': 5
+    },
+    {
+        'id': 5,
+        'dni': '49090334',
+        'nombre': 'Lucia',
+        'apellido': 'Fernandez',
+        'edad': 13
+    }
+]
+
 # Estructura: ID_TURNO, DIA, HORARIO, ID_PACIENTE, ESTADO, ID_DOCTOR
 matriz_turnos = [
     [1, 'lunes', '08:00', 1, 'ocupado', 1],
