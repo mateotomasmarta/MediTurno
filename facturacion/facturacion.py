@@ -1,4 +1,5 @@
 import json
+from utils.auxiliares import buscar_paciente_por_id
 
 try:
     with open("facturacion.json", "r", encoding="UTF-8") as archivo:
@@ -63,7 +64,35 @@ with open("facturacion.json", "w", encoding="UTF-8") as archivo:
 with open("datos.json", "r", encoding="utf-8") as archivo_datos:
     pacientes = json.load(archivo_datos)
 
+subfacturas = []
 
+for factura in facturas:
+    paciente = buscar_paciente_por_id(pacientes, factura["id_paciente"])
+    if paciente:
+        subfactura = {
+            "id_factura": factura["id_factura"],
+            "nombre": paciente["nombre"],
+            "apellido": paciente["apellido"],
+            "dni": paciente["dni"],
+            "dia": factura["dia"],
+            "hora": factura["hora"],
+            "importe": factura["importe"]
+        }
+        subfacturas.append(subfactura)
+
+
+####para cuando se agregue al menu:
+
+respuesta = input("¿Desea imprimir la sub-factura detallada? (s/n): ").lower()
+
+if respuesta == "s":
+    for sf in subfacturas:
+        print("\n--- Sub-factura ---")
+        print(f"Factura Nº: {sf['id_factura']}")
+        print(f"Paciente: {sf['nombre']} {sf['apellido']}")
+        print(f"DNI: {sf['dni']}")
+        print(f"Fecha: {sf['dia']} - Hora: {sf['hora']}")
+        print(f"Importe: ${sf['importe']}")
 
 
 
