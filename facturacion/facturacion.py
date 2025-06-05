@@ -83,6 +83,8 @@ for factura in facturas:
 
 ####para cuando se agregue al menu:
 
+#METER SLICING SI O SI EN EL PRINT DE LA SUBFACTURA
+
 respuesta = input("¿Desea imprimir la sub-factura detallada? (s/n): ").lower()
 
 if respuesta == "s":
