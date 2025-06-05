@@ -58,6 +58,11 @@ with open("facturacion.json", "w", encoding="UTF-8") as archivo:
     json.dump(facturas, archivo, ensure_ascii=False, indent=4)
 
 
+#subfactura detallada para pacientes
+
+with open("datos.json", "r", encoding="utf-8") as archivo_datos:
+    pacientes = json.load(archivo_datos)
+
 
 
 
