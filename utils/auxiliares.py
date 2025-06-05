@@ -34,3 +34,10 @@ def buscar_valor_por_clave(matriz,clave,clavebuscada):
     for diccionario in matriz:
         if diccionario[clave]==clavebuscada:
             return diccionario
+
+def buscar_paciente_por_id(pacientes, id_buscado):
+    for paciente in pacientes:
+        if paciente["id"] == id_buscado:
+            return paciente
+    return None  # Por si no se encuentra
+
