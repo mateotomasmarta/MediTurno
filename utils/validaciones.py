@@ -1,4 +1,5 @@
 from datos import matriz_turnos
+import re
 
 def validar_dni():
     bandera = True
@@ -17,6 +18,17 @@ def validar_dni():
 def pedir_dni():
     documento = input("ingresá tu DNI (importante respetar la cantidad de digitos y no agregar letras ni guiones): ")
     return documento
+
+def pedir_mail():
+    patron_mail = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    while True:
+        mail = input("Ingresá tu correo electrónico: ").strip()
+        if re.match(patron_mail, mail):
+            return mail
+        else:
+            print("❌ El correo electrónico ingresado no es válido. Intentá nuevamente.")
+
+
 
 def validar_edad():
     while True:

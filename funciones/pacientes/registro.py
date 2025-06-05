@@ -1,4 +1,4 @@
-from utils.validaciones import validar_edad, validar_dni
+from utils.validaciones import validar_edad, validar_dni, pedir_mail
 from utils.auxiliares import generar_nuevo_id
 from db.funciones.archivos_json import cargar_archivo_pacientes,guardar_archivo_pacientes
 import json
@@ -44,6 +44,9 @@ def lista_registro():
         edad = validar_edad() 
         lista_nuevo.append(edad)  
 
+        mail= pedir_mail()
+        lista_nuevo.append(mail)
+
         id = generar_nuevo_id()  # Ahora generar_nuevo_id debe leer del JSON
         lista_nuevo.insert(0, id)  
         return lista_nuevo  
@@ -63,7 +66,7 @@ def registrar_paciente():
             print("⚠️ No se pudo completar el registro.")
             return None
         
-        claves = ['id', 'dni', 'nombre', 'apellido', 'edad']
+        claves = ['id', 'dni', 'nombre', 'apellido', 'edad', 'mail']
         nuevo_diccionario = dict(zip(claves, nuevo_paciente)) 
         
         pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)

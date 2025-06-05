@@ -63,6 +63,7 @@ def menu_secretario_principal():
                             print(" " * 12 + f"├─ Apellido: {paciente['apellido']}")
                             print(" " * 12 + f"├─ Edad: {paciente['edad']} años")
                             print(" " * 12 + f"└─ DNI: {paciente['dni']}")
+                            print(" " * 12 + f"└─ Mail: {paciente['mail']}")
                     else:
                         print("\n" + " " * 10 + "⚠️ No se encontraron resultados.")
                     opcion = input("➤ Desea realizar otra búsqueda? (s/n): ").lower()
