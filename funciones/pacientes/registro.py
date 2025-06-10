@@ -1,5 +1,6 @@
 from datos import matriz_pacientes, matriz_turnos
 from agenda import mostrar_turnosdispo_paciente
+from exportar_datos import exportacion_datos
 from utils.auxiliares import obtener_nombre_paciente, buscar_valor_por_clave
 import time
 
@@ -167,7 +168,7 @@ def validar_turno_disponible(dia_turno, hora_turno):
     return turno_valido
 
 
-def cargar_turno_paciente(id_paciente,edad):
+def cargar_turno_paciente(id_paciente, edad):
     # Pedir al paciente el día y hora de su preferencia
     print("Por favor, selecciona un día y una hora para tu turno.")
     dia_turno = input("Día (lunes, miércoles, viernes): ").strip().lower()
@@ -177,22 +178,22 @@ def cargar_turno_paciente(id_paciente,edad):
     turno_encontrado = validar_turno_disponible(dia_turno, hora_turno)
 
     if turno_encontrado:
-
-        # Usamos un bucle 'for i in range' para recorrer la matriz de turnos
         for i in range(len(matriz_turnos)):
-            # Buscamos el turno que coincida con la fecha y la hora seleccionadas
             if matriz_turnos[i][1] == dia_turno and matriz_turnos[i][2] == hora_turno:
-                # Verificamos que el campo del paciente esté vacío ( no tiene asignado un paciente)
                 if matriz_turnos[i][3] is None:
-                    # Asignamos el turno al paciente
-                    matriz_turnos[i][3] = id_paciente  # Asignamos el ID del paciente al turno
-                    matriz_turnos[i][4] = 'ocupado' # Cambiamos el estado a ocupado
+                    matriz_turnos[i][3] = id_paciente
+                    matriz_turnos[i][4] = 'ocupado'
                     if edad <= 18:
                         matriz_turnos[i][5] = 2
                     else:
-                        matriz[i][5] = 1
+                        matriz_turnos[i][5] = 1
                     print(f"¡Turno asignado con éxito! Tu turno es el {dia_turno} a las {hora_turno}.")
+
+                    # Aquí llamás a exportar_datos para actualizar el archivo
+                    exportacion_datos("exportacion_datos.txt")
+                    
                     break
+
 
 
 
