@@ -3,6 +3,7 @@ from agenda import mostrar_turnosdispo_paciente
 from exportar_datos import exportacion_datos
 from utils.auxiliares import obtener_nombre_paciente, buscar_valor_por_clave
 import time
+import json
 
 # ===================================================================
 # FUNCIONES DE VALIDACIÓN Y AYUDA
@@ -70,16 +71,21 @@ def tomar_nombre():
                 # Mostrás resultado final
                 return nombre_formateado, apellido_formateado  # Devolvemos una tupla con nombre y apellido
 
-def buscar_paciente(dni, lista_pacientes):
-    # Buscás el paciente según DNI y nombre exacto (todo normalizado)
-    dni = dni.strip()  # saco cualquier espacio que joda
-      # paso todo a minúscula por las dudas
 
-    for paciente in lista_pacientes:
-        # me fijo si coincide dni y nombre en la matriz
-        if paciente['dni'] == dni:
-            return paciente  # te devuelve el paciente que encuentra
-    return None  # si no encuentra, devuelve None
+
+def buscar_paciente_por_dni_en_archivo(dni, ruta_archivo='db/datos.json'):
+    dni = dni.strip()
+    try:
+        with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+            pacientes = json.load(archivo)
+            for paciente in pacientes:
+                if paciente.get('dni') == dni:
+                    return paciente
+    except FileNotFoundError:
+        print(f"Archivo {ruta_archivo} no encontrado.")
+    except json.JSONDecodeError:
+        print("Error al leer el archivo JSON.")
+    return None
 
 
 def generar_nuevo_id(matriz):
@@ -87,14 +93,26 @@ def generar_nuevo_id(matriz):
     # a partir de este le suma 1 y crea el id, osea te devuelve un valor
     return max([turno[0] for turno in matriz], default=0) + 1
 
+RUTA_PACIENTES = 'db/datos.json'
 
-def obtener_id_por_dni(mpacientes, dni_buscado):
-    # Busca en la matriz de pacientes el paciente cuyo dni coincida y devuelve el paciente_id
-    resultado = list(filter(lambda p: p['dni'] == dni_buscado, mpacientes))
-    if resultado:
-        return resultado[0]['id']
-    else:
-        return None
+def cargar_pacientes():
+    try:
+        with open(RUTA_PACIENTES, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print("Archivo de pacientes no encontrado.")
+        return []
+    except json.JSONDecodeError:
+        print("Error al leer el archivo JSON de pacientes.")
+        return []
+
+def obtener_id_por_dni(dni_buscado):
+    pacientes = cargar_pacientes()
+    for paciente in pacientes:
+        if paciente['dni'] == dni_buscado:
+            return paciente['id']
+    return None
+
 
 #habria que usar esta funcion un poco mas ampliamente para vaidar
 # que no haya mas de un dni igual para distintos pacientes
