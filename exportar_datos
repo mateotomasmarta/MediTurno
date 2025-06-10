@@ -1,6 +1,6 @@
 from datos import matriz_turnos, matriz_medicos
 
-def exportar_datos(nombre_archivo):
+def exportacion_datos(nombre_archivo):
     try:
         arch = open(nombre_archivo, "w", encoding="utf-8")
         
