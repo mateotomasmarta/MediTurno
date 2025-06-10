@@ -93,9 +93,12 @@ def generar_nuevo_id(matriz):
     # a partir de este le suma 1 y crea el id, osea te devuelve un valor
     return max([turno[0] for turno in matriz], default=0) + 1
 
-RUTA_PACIENTES = 'db/datos.json'
+
 
 def cargar_pacientes():
+
+    RUTA_PACIENTES = 'db/datos.json'
+    
     try:
         with open(RUTA_PACIENTES, 'r', encoding='utf-8') as f:
             return json.load(f)
@@ -206,9 +209,6 @@ def cargar_turno_paciente(id_paciente, edad):
                     else:
                         matriz_turnos[i][5] = 1
                     print(f"¡Turno asignado con éxito! Tu turno es el {dia_turno} a las {hora_turno}.")
-
-                    # Aquí llamás a exportar_datos para actualizar el archivo
-                    exportacion_datos("exportacion_datos.txt")
                     
                     break
 
