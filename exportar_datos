@@ -29,3 +29,30 @@ def exportacion_datos(nombre_archivo):
 
 # Programa principal
 exportar_datos("exportacion_datos.txt")
+
+def cargar_turnos_desde_archivo(nombre_archivo):
+    matriz_turnos = []
+    try:
+        with open(nombre_archivo, "r", encoding="utf-8") as arch:
+            for linea in arch:
+                datos = linea.strip().split("\t")  # Asumamos que los campos van tabulados
+                if len(datos) == 6:  # ID, Día, Hora, ID Paciente, Estado, ID Médico
+                    matriz_turnos.append([int(datos[0]), datos[1], datos[2], datos[3], datos[4], datos[5]])
+    except FileNotFoundError:
+        print("Archivo no encontrado, se crea matriz vacía")
+    return matriz_turnos
+
+def guardar_turnos_en_archivo(matriz_turnos, nombre_archivo):
+    with open(nombre_archivo, "w", encoding="utf-8") as arch:
+        for turno in matriz_turnos:
+            linea = "\t".join(map(str, turno)) + "\n"
+            arch.write(linea)
+
+# Al iniciar el programa:
+matriz_turnos = cargar_turnos_desde_archivo("turnos.txt")
+
+# Trabajás con matriz_turnos: agregar, modificar, borrar
+
+# Al terminar o cuando quieras guardar cambios:
+guardar_turnos_en_archivo(matriz_turnos, "turnos.txt")
+
