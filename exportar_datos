@@ -1,0 +1,31 @@
+from datos import matriz_turnos, matriz_medicos
+
+def exportar_datos(nombre_archivo):
+    try:
+        arch = open(nombre_archivo, "w", encoding="utf-8")
+        
+        arch.write("=== MÉDICOS ===\n")
+        for medico in matriz_medicos:
+            linea = "ID: " + str(medico[0]) + " - Nombre: " + medico[1] + " - Especialidad: " + medico[2] + " - Sala: " + medico[3] + "\n"
+            arch.write(linea)
+        
+        arch.write("\n")  # Línea en blanco para separar secciones
+        
+        arch.write("=== TURNOS ===\n")
+        for turno in matriz_turnos:
+            linea = "ID Turno: " + str(turno[0]) + " - Día: " + turno[1] + " - Hora: " + turno[2] + " - ID Paciente: " + str(turno[3]) + " - Estado: " + turno[4] + " - ID Médico: " + str(turno[5]) + "\n"
+            arch.write(linea)
+        
+        print("Archivo creado correctamente.")
+    
+    except OSError as e:
+        print("No se puede grabar el archivo:", e)
+    
+    finally:
+        try:
+            arch.close()
+        except NameError:
+            pass
+
+# Programa principal
+exportar_datos("exportacion_datos.txt")
