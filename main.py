@@ -5,7 +5,7 @@ from menus.secretario import mostrar_menu_secretaria
 from utils.archivo_turnos import cargar_turnos_desde_archivo, guardar_turnos_en_archivo
 
 def cargar_turnos_desde_archivo(archprueba):
-    matriz_turnos = []
+    matriz_turnos_nueva = []
     try:
         with open(nombre_archivo, "r", encoding="utf-8") as arch:
             for linea in arch:
