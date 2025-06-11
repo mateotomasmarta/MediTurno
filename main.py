@@ -5,7 +5,7 @@ from menus.secretario import mostrar_menu_secretaria
 from utils.archivo_turnos import cargar_turnos_desde_archivo, guardar_turnos_en_archivo
 
 ARCHIVO_TURNOS = "exportacion_datos.txt"  # o el nombre real del archivo
-matriz_turnos = []  # se carga global
+matriz_turnos= []  # se carga global
 
 def mostrar_menu_principal():
     global matriz_turnos
