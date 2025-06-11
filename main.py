@@ -14,7 +14,7 @@ def cargar_turnos_desde_archivo(archprueba):
                     matriz_turnos.append([int(datos[0]), datos[1], datos[2], datos[3], datos[4], datos[5]])
     except FileNotFoundError:
         print("Archivo no encontrado, se crea matriz vacía")
-    return matriz_turnos
+    return matriz_turnos_nueva
 
 
 def mostrar_menu_principal():
