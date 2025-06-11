@@ -1,4 +1,4 @@
-from datos import matriz_turnos
+from main import matriz_turnos_nueva as matriz_turnos #te cambia tipo alias lo que tom abas antes por la matriz nueva
 from utils.auxiliares import obtener_nombre_doctor, obtener_nombre_paciente,buscar_por_dni
 
 
@@ -9,7 +9,7 @@ def mostrar_turnos_ocupados():
     print("\nID  DÍA       HORA   PACIENTE          ESTADO      DOCTOR")
     print("-" * 60)
     
-    for turno in matriz_turnos:
+    for turno in matriz_turnos_nueva:
         id_turno, dia, hora, id_paciente, estado, id_doctor = turno
         if estado == 'ocupado':
             nombre_paciente = obtener_nombre_paciente(id_paciente)
@@ -17,6 +17,11 @@ def mostrar_turnos_ocupados():
             print(f"{(id_turno):<4} {dia:<9} {hora:<6} {nombre_paciente:<16} 🔴 OCUPADO {nombre_doctor}")
     
     print("\n" + "═" * 70)
+    def guardar_turnos_en_archivo(matriz_turnos, nombre_archivo): #obvio llamamos solo la funcion con el parametro
+    with open(nombre_archivo, "w", encoding="utf-8") as arch:
+        for turno in matriz_turnos:
+            linea = "\t".join(map(str, turno)) + "\n"
+            arch.write(linea)
 
 
 def mostrar_turnos_disponibles():
