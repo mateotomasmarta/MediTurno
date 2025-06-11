@@ -33,6 +33,7 @@ exportar_datos("exportacion_datos.txt")
 
 ######## MATEO LEE ESTO:                        ###########################
 
+#modulo con funciones de turnos traer la funcion y y como te retorna la matriz la sacas de ahi
 def cargar_turnos_desde_archivo(nombre_archivo):
     matriz_turnos = []
     try:
