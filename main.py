@@ -4,8 +4,18 @@ from menus.paciente import mostrar_menu_pacientes
 from menus.secretario import mostrar_menu_secretaria
 from utils.archivo_turnos import cargar_turnos_desde_archivo, guardar_turnos_en_archivo
 
-ARCHIVO_TURNOS = "exportacion_datos.txt"  # o el nombre real del archivo
-matriz_turnos= []  # se carga global
+def cargar_turnos_desde_archivo(archprueba):
+    matriz_turnos = []
+    try:
+        with open(nombre_archivo, "r", encoding="utf-8") as arch:
+            for linea in arch:
+                datos = linea.strip().split("\t")  # Asumamos que los campos van tabulados
+                if len(datos) == 6:  # ID, Día, Hora, ID Paciente, Estado, ID Médico
+                    matriz_turnos.append([int(datos[0]), datos[1], datos[2], datos[3], datos[4], datos[5]])
+    except FileNotFoundError:
+        print("Archivo no encontrado, se crea matriz vacía")
+    return matriz_turnos
+
 
 def mostrar_menu_principal():
     global matriz_turnos
