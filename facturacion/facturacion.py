@@ -1,6 +1,18 @@
 import json
 from utils.auxiliares import buscar_paciente_por_id
 
+
+
+#se pide mail
+#factura segun edad 
+#secretario puede ver todas las facturas, print lectura arch json en el menu secretario
+#cerramiento de caja si hay tiempo
+
+#hoy hay que matar tema facturac ion paciente como se imrpime la factura individual en el menu pacient
+# matamos txt
+
+#meter slicing y recursividad en el print de cerramiento de caja y/o subfactura
+
 try:
     with open("facturacion.json", "r", encoding="UTF-8") as archivo: #leemos el archivo
         facturas = json.load(archivo) #pasamos a python el formato json y lo metemos en una variable
