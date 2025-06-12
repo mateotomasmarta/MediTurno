@@ -1,4 +1,4 @@
-from datos import matriz_turnos
+
 import re
 
 def validar_dni():
@@ -42,7 +42,7 @@ def validar_edad():
         else:
             print("⚠️ La edad debe ser un número.")
 
-def validar_turno_disponible(dia_turno, hora_turno):
+def validar_turno_disponible(dia_turno, hora_turno, matriz_turnos):
     turno_valido = False  
     for i in range(len(matriz_turnos)):
         id_turno, dia, hora, id_paciente_turno, estado, id_doctor = matriz_turnos[i]

@@ -1,8 +1,8 @@
-from datos import matriz_turnos
+
 from utils.auxiliares import obtener_nombre_doctor, obtener_nombre_paciente,buscar_por_dni
 
 
-def mostrar_turnos_ocupados():
+def mostrar_turnos_ocupados(matriz_turnos):
     print("\n" + "═" * 70)
     print("📊 TURNOS OCUPADOS")
     print("═" * 70)
@@ -19,7 +19,7 @@ def mostrar_turnos_ocupados():
     print("\n" + "═" * 70)
 
 
-def mostrar_turnos_disponibles_secretaria():
+def mostrar_turnos_disponibles_secretaria(matriz_turnos):
     print("\n" + "═" * 70)
     print("📊 TURNOS DISPONIBLES")
     print("═" * 70)
@@ -38,7 +38,7 @@ def mostrar_turnos_disponibles_secretaria():
     print("\n" + "═" * 70)
     return turnos_disponibles  
 
-def mostrar_todos_turnos():
+def mostrar_todos_turnos(matriz_turnos):
     print("\n" + "═" * 70)
     print("📊 TODOS LOS TURNOS")
     print("═" * 70)
@@ -55,7 +55,7 @@ def mostrar_todos_turnos():
     print("\n" + "═" * 70)
     
 
-def imprimir_turno_por_dni(dni):
+def imprimir_turno_por_dni(dni,matriz_turnos):
     pacientes = buscar_por_dni(dni)
     
     if not pacientes:

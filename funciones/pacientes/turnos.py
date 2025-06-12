@@ -1,21 +1,21 @@
-from datos import matriz_turnos
-from utils.auxiliares import buscar_paciente, obtener_id_por_dni, obtener_nombre_paciente
+from db.funciones.archivos_txt import cargar_turnos, guardar_turnos
+from utils.auxiliares import obtener_id_por_dni, obtener_nombre_paciente
 from db.funciones.archivos_json import cargar_archivo_pacientes
 from utils.validaciones import validar_turno_disponible
+
 RUTA_PACIENTES = 'db/datos.json'
 
-def obtener_turnos_paciente(matriz_turnos, id_paciente):
-    
+def obtener_turnos_paciente(id_paciente):
+    """Obtiene los turnos de un paciente desde el archivo txt"""
+    matriz_turnos = cargar_turnos()
     turnos_filtrados = list(filter(lambda t: t[3] == id_paciente, matriz_turnos))
     if not turnos_filtrados:
         return "No tiene aún turnos asignados."
-    # Creamos una lista de tuplas con (día, hora)
-    lista_tuplas = list(map(lambda t: (t[1], t[2]), turnos_filtrados))
-    return lista_tuplas
+    return list(map(lambda t: (t[1], t[2]), turnos_filtrados))
 
-
-
-def cargar_turno_paciente(id_paciente, edad_paciente):
+def cargar_turno_paciente(id_paciente, edad_paciente, matriz_turnos):
+    """Carga un turno para un paciente y guarda en txt"""
+    matriz_turnos = cargar_turnos()
     print("Por favor, selecciona un día y una hora para tu turno.")
     
     dias_validos = {1: "lunes", 2: "miércoles", 3: "viernes"}
@@ -39,7 +39,7 @@ def cargar_turno_paciente(id_paciente, edad_paciente):
         print(" ⚠️ Hora inválida. Por favor, ingresa una hora válida (08:00, 09:00, 16:00).")
         hora_turno = input("Hora (ejemplo: 08:00, 09:00, 16:00): ").strip()
 
-    turno_encontrado = validar_turno_disponible(dia_turno, hora_turno)
+    turno_encontrado = validar_turno_disponible(dia_turno, hora_turno, matriz_turnos)
 
     if turno_encontrado:
         for i in range(len(matriz_turnos)):
@@ -51,10 +51,13 @@ def cargar_turno_paciente(id_paciente, edad_paciente):
                         matriz_turnos[i][5] = 2
                     else:
                         matriz_turnos[i][5] = 1
+                    guardar_turnos(matriz_turnos)  # Guardar cambios
                     print(f" 🟢 ¡Turno asignado con éxito! Tu turno es el {dia_turno} a las {hora_turno}.")
                     break
 
-def mostrar_turnosdipo_paciente():
+def mostrar_turnosdipo_paciente(matriz_turnos):
+    """Muestra los turnos disponibles leyendo del archivo txt"""
+    matriz_turnos = cargar_turnos()
     print("\n" + "═" * 70)
     print(f"📊 TURNOS DISPONIBLES")
     print("═" * 70)
@@ -63,21 +66,22 @@ def mostrar_turnosdipo_paciente():
 
     for turno in matriz_turnos:
         id_turno, dia, hora, id_paciente, estado, doctor_turno = turno
-        if estado == 'disponible' :
-
+        if estado == 'disponible':
             print(f"{(id_turno):<4} {dia:<9} {hora:<6} 🟢 DISPONIBLE ")
 
     print("\n" + "═" * 70)
 
-def ver_mis_turnos(dni_paciente):
-    """Muestra los turnos del paciente actual"""
+def ver_mis_turnos(dni_paciente, matriz_turnos):
+    """Muestra los turnos del paciente leyendo del archivo txt"""
+    matriz_turnos = cargar_turnos()
     pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)
-    id_paciente = obtener_id_por_dni(pacientes, dni_paciente)
+    id_paciente = obtener_id_por_dni(dni_paciente)
+    
     if not id_paciente:
         print("\n⚠️ No se encontró paciente con ese DNI")
         return
     
-    turnos = obtener_turnos_paciente(matriz_turnos, id_paciente)
+    turnos = obtener_turnos_paciente(id_paciente)
     
     print("\n" + "═" * 50)
     print(f"📅 TURNOS DE {obtener_nombre_paciente(id_paciente).upper()}")

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 def vaciar_turno(matriz):
@@ -40,40 +41,34 @@ def eliminar_turno(matriz_t):
 
 =======
 def vaciar_turno(matriz):
+=======
+
+from db.funciones.archivos_txt import guardar_turnos
+
+def vaciar_turno(matriz_turnos):
+>>>>>>> origin/main
     try:
         turno_vaciar = int(input("Ingrese el ID del turno a vaciar: "))
-        for i in range(len(matriz)):
-            if matriz[i][0] == turno_vaciar:  
-                matriz[i][3] = None  
-                matriz[i][4] = 'disponible'  
-                matriz[i][5] = None  
+        for i in range(len(matriz_turnos)):
+            if matriz_turnos[i][0] == turno_vaciar:
+                matriz_turnos[i][3] = None
+                matriz_turnos[i][4] = 'disponible'
+                matriz_turnos[i][5] = None
                 print(f"✅ Turno con ID {turno_vaciar} marcado como disponible.")
+                guardar_turnos(matriz_turnos)
                 return
         print(f"⚠️ No se encontró un turno con el ID {turno_vaciar}.")
     except ValueError:
         print("⚠️ Debe ingresar un número válido para el ID del turno.")
     except Exception as e:
         print(f"⚠️ Ocurrió un error inesperado: {e}")
-def vaciar_turno(matriz):
 
-    turno_vaciar = int(input("Ingrese el ID del turno a vaciar: "))
-    for i in range(len(matriz)):
-        if matriz[i][0] == turno_vaciar:  
-            matriz[i][3] = None  
-            matriz[i][4] = 'disponible'  
-            matriz[i][5] = None  
-            print(f"✅ Turno con ID {turno_vaciar} marcado como disponible.")
-            return
-    print(f"⚠️ No se encontró un turno con el ID {turno_vaciar}.")
-            
-    
 def elegir_turno_a_modificar(turno_agendados):
     bandera = True
     while bandera:
         try:
             print("")
             id_turno = int(input("Ingrese el número de la ID del turno que desea modificar: "))
-
             for i in range(len(turno_agendados)):
                 if turno_agendados[i][0] == id_turno:
                     print("")
@@ -92,7 +87,6 @@ def elegir_dia(turnos_disponibles):
         try:
             print("")
             dia_id = int(input("Ingrese el número de la ID del turno que desea elegir para la modificación: "))
-
             for i in range(len(turnos_disponibles)):
                 if turnos_disponibles[i][0] == dia_id:
                     print("")
@@ -104,13 +98,17 @@ def elegir_dia(turnos_disponibles):
         except Exception as e:
             print(f"⚠️ Ocurrió un error inesperado: {e}")
 
-def modifica_turno(turno, dia, matriz): 
-    
-    for fila in matriz:
+def modifica_turno(turno, dia, matriz_turnos):
+    # turno y dia son IDs de turno
+    paciente = None
+    doctor = None
+    estado = None
+    for fila in matriz_turnos:
         if fila[0] == turno:
             paciente = fila[3]
             doctor = fila[5]
             estado = fila[4]
+<<<<<<< HEAD
     
     matriz[dia-1][3] = paciente
     matriz[dia-1][5] = doctor
@@ -122,6 +120,21 @@ def modifica_turno(turno, dia, matriz):
 
     print("✅ El turno ha sido modificado correctamente.")
 >>>>>>> origin/main
+=======
+            break
+>>>>>>> origin/main
 
+    for fila in matriz_turnos:
+        if fila[0] == dia:
+            fila[3] = paciente
+            fila[5] = doctor
+            fila[4] = estado
 
+    for fila in matriz_turnos:
+        if fila[0] == turno:
+            fila[3] = None
+            fila[5] = None
+            fila[4] = 'disponible'
 
+    guardar_turnos(matriz_turnos)
+    print("✅ El turno ha sido modificado correctamente.")

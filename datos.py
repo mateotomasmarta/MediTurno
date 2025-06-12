@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 matriz_pacientes =[
             {
                 'id': 1,
@@ -95,6 +96,9 @@ matriz_turnos = [
     [17, 'viernes', '16:00', None, 'disponible', None],
     [18, 'viernes', '18:00', None, 'disponible', None]
 ]
+=======
+
+>>>>>>> origin/main
 
 secretaria = ("admin", "admin123")
 
