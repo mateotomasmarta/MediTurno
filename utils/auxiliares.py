@@ -54,3 +54,9 @@ def generar_nuevo_id():
     if not pacientes:
         return 1
     return max(paciente['id'] for paciente in pacientes) + 1
+
+def buscar_paciente_por_id(pacientes, id_paciente):
+    for paciente in pacientes:
+        if int(paciente.get("id")) == int(id_paciente):
+            return paciente
+    return None

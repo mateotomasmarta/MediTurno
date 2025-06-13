@@ -7,7 +7,7 @@ from db.funciones.archivos_txt import cargar_turnos
 def mostrar_menu_principal():
     """Menú principal con diseño mejorado para terminal"""
     # Cargar turnos al iniciar
-    matriz_turnos = cargar_turnos()
+    # matriz_turnos = cargar_turnos()
     
     while True:
         print("╔══════════════════════════════════════════╗")
@@ -25,7 +25,7 @@ def mostrar_menu_principal():
         if opcion == "1":
             print("🔄 Cargando módulo de pacientes...")
             time.sleep(1)
-            mostrar_menu_pacientes(matriz_turnos)  # Pasamos los turnos como parámetro
+            mostrar_menu_pacientes()  # Pasamos los turnos como parámetro
             
         elif opcion == "2":
             print("🔄 Cargando módulo de secretaría...")
@@ -46,4 +46,4 @@ def mostrar_menu_principal():
             time.sleep(1)
 
 if __name__ == "__main__":
-    mostrar_menu_principal()
+    mostrar_menu_principal()  # Cargar turnos al iniciar

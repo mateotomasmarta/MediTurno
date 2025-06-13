@@ -21,13 +21,9 @@ def cargar_turnos():
     except FileNotFoundError:
         return []
 
-def guardar_turnos(matriz_turnos):
-    """
-    Guarda la matriz de turnos en el archivo 'db/turnos.txt'
-    """
-    with open('db/turnos.txt', 'w', encoding='utf-8') as f:
-        for fila in matriz_turnos:
-            linea = '\t'.join([str(elem) if elem is not None else 'None' for elem in fila])
-            f.write(linea + '\n')
+def guardar_turnos(matriz_turnos, path="db/turnos.txt"):
+    with open(path, "w", encoding="utf-8") as archivo:
+        for turno in matriz_turnos:
+            archivo.write('\t'.join(str(x) for x in turno) + '\n')
 
 matriz_turnos = cargar_turnos()
