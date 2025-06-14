@@ -5,18 +5,15 @@ from menus.secretario import mostrar_menu_secretaria
 from db.funciones.archivos_txt import cargar_turnos
 
 def mostrar_menu_principal():
-    """Menú principal con diseño mejorado para terminal"""
-    # Cargar turnos al iniciar
-    # matriz_turnos = cargar_turnos()
     
     while True:
         print("╔══════════════════════════════════════════╗")
-        print("║            💎 MENÚ PRINCIPAL 💎         ║")
+        print("║            💎 MENÚ PRINCIPAL 💎          ║")
         print("╠══════════════════════════════════════════╣")
         print("║                                          ║")
-        print("║  1. 👨⚕️  Acceso Pacientes              ║")
-        print("║  2. 👩💼 Acceso Secretaría              ║")
-        print("║  3. 🔴 Salir del Sistema                ║")
+        print("║  1. 👨⚕️  Acceso Pacientes                ║")
+        print("║  2. 👩💼 Acceso Secretaría               ║")
+        print("║  3. 🔴 Salir del Sistema                 ║")
         print("║                                          ║")
         print("╚══════════════════════════════════════════╝")
 

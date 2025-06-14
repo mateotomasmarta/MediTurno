@@ -1,18 +1,15 @@
 
 import re
 
-def validar_dni():
-    bandera = True
-    while bandera == True:
-        dni = input("Ingresá tu DNI (7 u 8 dígitos, solo números, sin guiones ni letras): ").strip()
-        
-        if not dni.isdigit():
-            print("❌ El DNI debe contener solo números.")
-        elif not (7 <= len(dni) <= 8):
-            print("❌ El DNI debe tener entre 7 y 8 dígitos.")
-        else:
-            bandera = False
-            return dni  
+#RECURSIVIDAD
+def validar_dni(dni=None):
+    if dni is None:
+        dni = input("Ingrese el DNI del paciente: ").strip()
+    
+    if not dni.isdigit() or len(dni) < 7 or len(dni) > 8:
+        print("⚠️ DNI inválido. Debe tener 7 u 8 dígitos numéricos.")
+        return validar_dni()  # Llamada recursiva
+    return dni
 
 
 def pedir_dni():

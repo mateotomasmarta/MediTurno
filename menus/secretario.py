@@ -1,25 +1,18 @@
 import time
 from funciones.secretario.login import validar_credenciales
 from utils.auxiliares import buscar_por_dni, buscar_por_nombre_o_apellido
-from funciones.secretario.agenda import (
-    mostrar_turnos_disponibles_secretaria,
-    mostrar_turnos_ocupados,
-    mostrar_todos_turnos,
-    imprimir_turno_por_dni,
-)
+from funciones.secretario.agenda import mostrar_turnos_disponibles_secretaria, mostrar_turnos_ocupados, mostrar_todos_turnos,imprimir_turno_por_dni
 from db.funciones.archivos_txt import matriz_turnos
-from funciones.secretario.gestion import (
-    vaciar_turno,
-    elegir_turno_a_modificar,
-    elegir_dia,
-    modifica_turno,
-)
+from funciones.secretario.gestion import vaciar_turno, elegir_turno_a_modificar, elegir_dia, modifica_turno
+from funciones.secretario.facturacion import cierre_total_con_detalle
+from funciones.secretario.facturacion import imprimir_facturas_por_dni
+
 
 def mostrar_menu_secretaria():
     """Menú de secretaría con sistema de login"""
     while True:
         print("╔══════════════════════════════════════════╗")
-        print("║        🔐 ACCESO SECRETARÍA 🔐          ║")
+        print("║        🔐 ACCESO SECRETARÍA 🔐           ║")
         print("╠══════════════════════════════════════════╣")
         
         usuario = input("Usuario: ")
@@ -41,7 +34,8 @@ def menu_secretario_principal():
         print("║                                          ║")
         print("║  1. 👥 Gestionar Pacientes               ║")
         print("║  2. 📅 Gestionar Turnos                  ║")
-        print("║  3. ↩️  Volver al menú principal         ║")
+        print("║  3. 💰 Facturación                       ║")
+        print("║  4. ↩️  Volver al menú principal          ║")
         print("║                                          ║")
         print("╚══════════════════════════════════════════╝")
         
@@ -55,7 +49,7 @@ def menu_secretario_principal():
                 print("║                                          ║")
                 print("║  1. 📋 Buscar por DNI                    ║")
                 print("║  2. 📋 Buscar por Nombre o Apellido      ║")
-                print("║  3. ↩️ Volver al menú principal         ║")
+                print("║  3. ↩️ Volver al menú principal           ║")
                 print("║                                          ║")
                 print("╚══════════════════════════════════════════╝")
                 
@@ -107,13 +101,13 @@ def menu_secretario_principal():
             while True:
                 mostrar_todos_turnos(matriz_turnos)
                 print("\n╔══════════════════════════════════════════╗")
-                print("║        🛠️ GESTIONAR TURNOS               ║")
+                print("║        🛠️ GESTIONAR TURNOS                ║")
                 print("╠══════════════════════════════════════════╣")
                 print("║                                          ║")
-                print("║  1. ✏️ Modificar un turno                ║")
-                print("║  2. 🗑️ Eliminar un turno                 ║")
+                print("║  1. ✏️ Modificar un turno                 ║")
+                print("║  2. 🗑️ Eliminar un turno                  ║")
                 print("║  3. 📅 Filtrar turnos                    ║")
-                print("║  4. ↩️ Volver al menú principal          ║")
+                print("║  4. ↩️ Volver al menú principal           ║")
                 print("║                                          ║")
                 print("╚══════════════════════════════════════════╝")
                 
@@ -147,7 +141,7 @@ def menu_secretario_principal():
                         print("║                                          ║")
                         print("║  1. 📅 Filtrar por ocupados              ║")
                         print("║  2. 📅 Filtrar por disponibles           ║")
-                        print("║  3. ↩️ Volver al menú principal          ║")
+                        print("║  3. ↩️ Volver al menú principal           ║")
                         print("║                                          ║")
                         print("╚══════════════════════════════════════════╝")
                         
@@ -171,8 +165,50 @@ def menu_secretario_principal():
                     time.sleep(1)
         
         elif opcion == "3":
-            break
+            while True:
+                print("╔══════════════════════════════════════════╗")
+                print("║           💳 MENÚ FACTURACIÓN            ║")
+                print("╠══════════════════════════════════════════╣")
+                print("║                                          ║")
+                print("║  1. 🧾 Ver facturas por paciente         ║")
+                print("║  2. 📑 Ver todas las facturas            ║")
+                print("║  3. 🔒 Cerrar caja                       ║")
+                print("║  4. ↩️ Volver al menú principal          ║")
+                print("║                                          ║")
+                print("╚══════════════════════════════════════════╝")
+                
+                try:
+                    opcion_factura = input("➤ Seleccione una opción [1-4]: ")
+                    
+                    if opcion_factura == "1":
+                        dni = input("Ingrese el DNI del paciente: ").strip()
+                        imprimir_facturas_por_dni(dni)
+                        input("\nPresione ENTER para continuar...")
+
+                    elif opcion_factura == "2":
+                        pass
+
+                    elif opcion_factura == "3":
+                        try:
+                            print("🔐 Cerrando caja (total general)...")
+                            total = cierre_total_con_detalle("db/facturacion.json")
+                            if total == 0:
+                                print("⚠️ No hay facturas o no se pudo abrir el archivo.")
+                            else:
+                                print(f"✅ Caja cerrada exitosamente")
+                        except Exception as e:
+                            print(f"❌ Error al cerrar caja: {e}")
+                    elif opcion_factura == "4":
+                        break
+                    else:
+                        print("⚠️ Opción inválida. Intente nuevamente.")
+                
+                except Exception as e:
+                    print(f"❌ Error inesperado en el menú de facturación: {e}")
         
+        
+        elif opcion == "4":
+            break
         else:
             print("\n⚠️ Opción inválida!")
             time.sleep(1)

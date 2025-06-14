@@ -1,60 +1,66 @@
 [
-    [
-        {
-            "id_factura": 1,
-            "id_paciente": 5,
-            "id_turno": 1,
-            "dia": "lunes",
-            "hora": "08:00",
-            "importe": 25000
-        },
-        {
-            "id_factura": 2,
-            "id_paciente": 1,
-            "id_turno": 2,
-            "dia": "lunes",
-            "hora": "09:00",
-            "importe": 25000
-        },
-        {
-            "id_factura": 3,
-            "id_paciente": 2,
-            "id_turno": 7,
-            "dia": "miércoles",
-            "hora": "08:00",
-            "importe": 25000
-        },
-        {
-            "id_factura": 4,
-            "id_paciente": 3,
-            "id_turno": 8,
-            "dia": "miércoles",
-            "hora": "09:00",
-            "importe": 25000
-        },
-        {
-            "id_factura": 5,
-            "id_paciente": 4,
-            "id_turno": 12,
-            "dia": "viernes",
-            "hora": "15:00",
-            "importe": 25000
-        },
-        {
-            "id_factura": 6,
-            "id_paciente": 5,
-            "id_turno": 15,
-            "dia": "viernes",
-            "hora": "13:00",
-            "importe": 25000
-        },
-        {
-            "id_factura": 7,
-            "id_paciente": 2,
-            "id_turno": 16,
-            "dia": "viernes",
-            "hora": "15:00",
-            "importe": 25000
-        }
-    ]
+    {
+        "id_factura": 1,
+        "id_paciente": 5,
+        "id_turno": 1,
+        "dia": "lunes",
+        "hora": "08:00",
+        "importe": 25000
+    },
+    {
+        "id_factura": 2,
+        "id_paciente": 1,
+        "id_turno": 2,
+        "dia": "lunes",
+        "hora": "09:00",
+        "importe": 15000
+    },
+    {
+        "id_factura": 3,
+        "id_paciente": 2,
+        "id_turno": 7,
+        "dia": "miércoles",
+        "hora": "08:00",
+        "importe": 15000
+    },
+    {
+        "id_factura": 4,
+        "id_paciente": 3,
+        "id_turno": 8,
+        "dia": "miércoles",
+        "hora": "09:00",
+        "importe": 15000
+    },
+    {
+        "id_factura": 5,
+        "id_paciente": 4,
+        "id_turno": 12,
+        "dia": "viernes",
+        "hora": "15:00",
+        "importe": 25000
+    },
+    {
+        "id_factura": 6,
+        "id_paciente": 5,
+        "id_turno": 15,
+        "dia": "viernes",
+        "hora": "13:00",
+        "importe": 25000
+    },
+    {
+        "id_factura": 7,
+        "id_paciente": 2,
+        "id_turno": 16,
+        "dia": "viernes",
+        "hora": "15:00",
+        "importe": 15000
+    },
+    {
+        "id_factura": 8,
+        "id_paciente": 6,
+        "id_turno": 3,
+        "dia": "lunes",
+        "hora": "10:00",
+        "importe": 25000
+    }
 ]

@@ -6,7 +6,7 @@ from funciones.pacientes.turnos import obtener_turnos_paciente, cargar_turno_pac
 from db.funciones.archivos_json import cargar_archivo_pacientes, guardar_archivo_pacientes
 from db.funciones.archivos_txt import guardar_turnos, cargar_turnos
 from funciones.pacientes.facturacion import generar_facturas_desde_turnos, imprimir_factura_paciente
-
+from db.funciones.archivos_json import cargar_archivo_json
 RUTA_PACIENTES = 'db/datos.json'
 RUTA_TURNOS = 'db/turnos.txt'
 RUTA_FACTURAS = 'db/facturacion.json'
@@ -93,19 +93,31 @@ def mostrar_menu_pacientes():
             
             elif opcion == "2":
                 try:
-                    matriz_turnos = cargar_turnos()
+                    matriz_turnos = cargar_turnos()  # Usar función establecida para cargar turnos
                     mostrar_turnosdipo_paciente(matriz_turnos)
                     cargar_turno_paciente(paciente_actual['id'], paciente_actual['edad'], matriz_turnos)
-                    guardar_turnos(matriz_turnos, "db/turnos.txt")
+                    guardar_turnos(matriz_turnos)  # Usar función establecida para guardar turnos
 
-                    # Generar factura después de confirmar/agendar el turno
-                    generar_facturas_desde_turnos("db/turnos.txt", "db/facturacion.json")  # <-- sin argumentos si así está definida
-                    # Mostrar factura generada
-                    imprimir_factura_paciente(paciente_actual['id'], RUTA_FACTURAS, RUTA_PACIENTES)
+                    # Generar facturas usando función establecida
+                    generar_facturas_desde_turnos(RUTA_TURNOS, RUTA_FACTURAS)
 
+                    facturas = cargar_archivo_json(RUTA_FACTURAS)
+                    if facturas and isinstance(facturas[0], list):
+                        facturas = facturas[0]
+                    facturas_paciente = [fac for fac in facturas if int(fac["id_paciente"]) == int(paciente_actual['id'])]
+                    if facturas_paciente:
+                        ultima_factura = max(facturas_paciente, key=lambda f: f["id_factura"])
+                        print("\n" + "=" * 60)
+                        print(f"{'FACTURA GENERADA'.center(60)}")
+                        print("=" * 60)
+                        print(f"Nombre: {paciente_actual['nombre']} {paciente_actual['apellido']}".ljust(40) + f"DNI: {paciente_actual['dni']}")
+                        print("-" * 60)
+                        print(f"| ID Factura: {str(ultima_factura['id_factura']).ljust(6)} | Fecha: {ultima_factura['dia'].ljust(10)} | Hora: {ultima_factura['hora'].ljust(5)} | Importe: ${str(ultima_factura['importe']).ljust(8)}|")
+                        print("=" * 60)
+                    else:
+                        print("No se encontró la factura recién generada.")
                 except Exception as e:
                     print(f"⚠️ Error al agendar un turno: {e}")
-                    
                     
             elif opcion == "3":
                 try:

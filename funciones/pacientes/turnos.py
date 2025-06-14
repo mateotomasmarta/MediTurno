@@ -14,8 +14,6 @@ def obtener_turnos_paciente(id_paciente):
     return list(map(lambda t: (t[1], t[2]), turnos_filtrados))
 
 def cargar_turno_paciente(id_paciente, edad_paciente, matriz_turnos):
-    """Carga un turno para un paciente y guarda en txt"""
-    matriz_turnos = cargar_turnos()
     print("Por favor, selecciona un día y una hora para tu turno.")
     
     dias_validos = {1: "lunes", 2: "miércoles", 3: "viernes"}
@@ -47,13 +45,11 @@ def cargar_turno_paciente(id_paciente, edad_paciente, matriz_turnos):
                 if matriz_turnos[i][3] is None:
                     matriz_turnos[i][3] = id_paciente  
                     matriz_turnos[i][4] = 'ocupado'   
-                    if edad_paciente <= 18:
-                        matriz_turnos[i][5] = 2
-                    else:
-                        matriz_turnos[i][5] = 1
-                    guardar_turnos(matriz_turnos)  # Guardar cambios
+                    matriz_turnos[i][5] = 2 if edad_paciente <= 18 else 1
+                    guardar_turnos(matriz_turnos)  # ✅ Guardar los cambios correctamente
                     print(f" 🟢 ¡Turno asignado con éxito! Tu turno es el {dia_turno} a las {hora_turno}.")
                     break
+
 
 def mostrar_turnosdipo_paciente(matriz_turnos):
     """Muestra los turnos disponibles leyendo del archivo txt"""

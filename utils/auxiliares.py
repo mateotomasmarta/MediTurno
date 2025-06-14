@@ -55,8 +55,11 @@ def generar_nuevo_id():
         return 1
     return max(paciente['id'] for paciente in pacientes) + 1
 
-def buscar_paciente_por_id(pacientes, id_paciente):
-    for paciente in pacientes:
-        if int(paciente.get("id")) == int(id_paciente):
-            return paciente
-    return None
+
+#RECURSIVIDAD
+def buscar_paciente_por_id(pacientes, id_paciente, index=0):
+    if index >= len(pacientes):
+        return None 
+    if pacientes[index]['id'] == id_paciente:
+        return pacientes[index]
+    return buscar_paciente_por_id(pacientes, id_paciente, index + 1)  # Llamada recursiva
