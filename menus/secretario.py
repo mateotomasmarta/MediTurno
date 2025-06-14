@@ -4,8 +4,7 @@ from utils.auxiliares import buscar_por_dni, buscar_por_nombre_o_apellido
 from funciones.secretario.agenda import mostrar_turnos_disponibles_secretaria, mostrar_turnos_ocupados, mostrar_todos_turnos,imprimir_turno_por_dni
 from db.funciones.archivos_txt import matriz_turnos
 from funciones.secretario.gestion import vaciar_turno, elegir_turno_a_modificar, elegir_dia, modifica_turno
-from funciones.secretario.facturacion import cierre_total_con_detalle
-from funciones.secretario.facturacion import imprimir_facturas_por_dni
+from funciones.secretario.facturacion import imprimir_facturas_por_dni, imprimir_todas_las_facturas_ordenadas, cierre_total_con_detalle
 
 
 def mostrar_menu_secretaria():
@@ -186,7 +185,7 @@ def menu_secretario_principal():
                         input("\nPresione ENTER para continuar...")
 
                     elif opcion_factura == "2":
-                        pass
+                        imprimir_todas_las_facturas_ordenadas("db/facturacion.json")
 
                     elif opcion_factura == "3":
                         try:

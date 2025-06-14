@@ -1,7 +1,29 @@
 import json
 from db.funciones.archivos_json import cargar_archivo_pacientes, cargar_facturas
 from utils.auxiliares import buscar_paciente
+from db.funciones.archivos_json import cargar_facturas
 
+def imprimir_todas_las_facturas_ordenadas(ruta_facturas="db/facturacion.json"):
+    facturas = cargar_facturas(ruta_facturas)
+    # Orden personalizado de días
+    orden_dias = {"lunes": 1, "miércoles": 2, "viernes": 3}
+    # Ordenar por día y luego por hora
+    facturas_ordenadas = sorted(
+        facturas,
+        key=lambda f: (
+            orden_dias.get(f.get("dia", "").lower(), 99),
+            f.get("hora", "")
+        )
+    )
+
+    print("\n" + "="*70)
+    print("FACTURAS ORDENADAS POR DÍA Y HORARIO".center(70))
+    print("="*70)
+    for f in facturas_ordenadas:
+        print(f"| Día: {str(f.get('dia', '---')).capitalize():<10} | Hora: {str(f.get('hora', '---')):<5} | ID Factura: {str(f.get('id_factura', '')):<4} | Paciente: {str(f.get('id_paciente', '')):<4} | Importe: ${str(f.get('importe', '')):<8}|")
+        print("-"*70)
+    print("="*70)
+    
 def imprimir_facturas_por_dni(dni, ruta_pacientes="db/datos.json", ruta_facturas="db/facturacion.json"):
     pacientes = cargar_archivo_pacientes(ruta_pacientes)
     facturas = cargar_facturas(ruta_facturas)
