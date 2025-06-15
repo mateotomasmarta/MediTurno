@@ -1,5 +1,6 @@
 import json
-RUTA = "db/datos.json"
+RUTA_PACIENTES = "db/datos.json"
+RUTA_FACTURAS = 'db/facturacion.json'
 
 def leer_archivo_pacientes(RUTA):
     with open(RUTA, 'r', encoding='utf-8') as archivo:
@@ -13,7 +14,7 @@ def cargar_archivo_pacientes(RUTA):
         return datos
 
 def guardar_archivo_pacientes(pacientes):
-    with open(RUTA, 'w', encoding='utf-8') as f:
+    with open(RUTA_PACIENTES, 'w', encoding='utf-8') as f:
         json.dump(pacientes, f, ensure_ascii=False, indent=4)
 
 
@@ -35,5 +36,5 @@ def cargar_archivo_json(path):
 
 
 if __name__ == "__main__":
-    contenido = leer_archivo_pacientes(RUTA)
+    contenido = leer_archivo_pacientes(RUTA_PACIENTES)
     print(contenido)

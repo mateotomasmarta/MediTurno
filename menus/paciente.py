@@ -3,13 +3,11 @@ from utils.validaciones import validar_dni
 from utils.auxiliares import buscar_paciente
 from funciones.pacientes.registro import registrar_paciente
 from funciones.pacientes.turnos import obtener_turnos_paciente, cargar_turno_paciente, mostrar_turnosdipo_paciente, ver_mis_turnos
-from db.funciones.archivos_json import cargar_archivo_pacientes, guardar_archivo_pacientes
-from db.funciones.archivos_txt import guardar_turnos, cargar_turnos
+from db.funciones.archivos_json import cargar_archivo_pacientes, guardar_archivo_pacientes, cargar_archivo_json, RUTA_PACIENTES, RUTA_FACTURAS
+from db.funciones.archivos_txt import guardar_turnos, cargar_turnos, RUTA_TURNOS
 from funciones.pacientes.facturacion import generar_facturas_desde_turnos, imprimir_factura_paciente
-from db.funciones.archivos_json import cargar_archivo_json
-RUTA_PACIENTES = 'db/datos.json'
-RUTA_TURNOS = 'db/turnos.txt'
-RUTA_FACTURAS = 'db/facturacion.json'
+
+
 
 def autenticar_paciente():
     """Maneja el proceso de login/registro de pacientes"""
@@ -19,10 +17,13 @@ def autenticar_paciente():
     
     while True:
         try:
-            print("\n¿Ya tienes una cuenta registrada?")
-            print("1. Sí, ingresar con mi DNI")
-            print("2. No, quiero registrarme")
-            print("3. Volver al menú principal")
+            print("\n" + "═" * 50)
+            print("¿Ya tienes una cuenta registrada?".center(50))
+            print("═" * 50)
+            print("║  1. 🪪  Sí, ingresar con mi DNI".ljust(49) + "║")
+            print("║  2. 📝  No, quiero registrarme".ljust(48) + "║")
+            print("║  3. ↩️  Volver al menú principal".ljust(50) + "║")
+            print("═" * 50)
             
             opcion = input("\n➤ Seleccione una opción [1-3]: ").strip()
             

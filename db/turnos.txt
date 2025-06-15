@@ -1,7 +1,7 @@
-1	lunes	08:00	5	ocupado	2
+1	lunes	08:00	None	disponible	None
 2	lunes	09:00	1	ocupado	1
 3	lunes	10:00	6	ocupado	1
-4	lunes	13:00	None	disponible	None
+4	lunes	13:00	5	ocupado	2
 5	lunes	16:00	None	disponible	None
 6	miércoles	18:00	None	disponible	None
 7	miércoles	08:00	2	ocupado	1

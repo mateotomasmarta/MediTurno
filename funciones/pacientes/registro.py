@@ -1,8 +1,8 @@
 from utils.validaciones import validar_edad, validar_dni, pedir_mail
 from utils.auxiliares import generar_nuevo_id
-from db.funciones.archivos_json import cargar_archivo_pacientes,guardar_archivo_pacientes
+from db.funciones.archivos_json import cargar_archivo_pacientes,guardar_archivo_pacientes, RUTA_PACIENTES
 import json
-RUTA_PACIENTES = 'db/datos.json'
+
 
 def tomar_nombre():
     bandera = True

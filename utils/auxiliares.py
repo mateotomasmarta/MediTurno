@@ -1,11 +1,12 @@
+from db.funciones.archivos_txt import matriz_medicos
 from db.funciones.archivos_json import *
-from datos import matriz_medicos
 RUTA_PACIENTES = 'db/datos.json'
+
 
 def obtener_nombre_doctor(id_doctor):
     for doctor in matriz_medicos:
         if doctor[0] == id_doctor:
-            return f"{doctor[1]} {doctor[2]}"
+            return doctor[1]  # Solo nombre completo
     return "Sin asignar"
 
 
