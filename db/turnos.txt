@@ -7,7 +7,7 @@
 7	miércoles	08:00	2	ocupado	1
 8	miércoles	09:00	3	ocupado	1
 9	miércoles	10:00	None	disponible	None
-10	miércoles	11:00	None	disponible	None
+10	miércoles	11:00	6	ocupado	1
 11	viernes	13:00	None	disponible	None
 12	viernes	15:00	4	ocupado	2
 13	viernes	09:00	None	disponible	None
