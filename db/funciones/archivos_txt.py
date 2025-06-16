@@ -26,7 +26,7 @@ def cargar_turnos():
 def guardar_turnos(matriz_turnos, path="db/turnos.txt"):
     with open(path, "w", encoding="utf-8") as archivo:
         for turno in matriz_turnos:
-            archivo.write('\t'.join(str(x) for x in turno) + '\n')
+            archivo.write('\t'.join(str(x) for x in turno) + '\n') #serializacion
 
 matriz_turnos = cargar_turnos()
 
