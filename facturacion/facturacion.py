@@ -209,3 +209,138 @@ def imprimir_factura_paciente(id_paciente, path_facturas="facturacion.json", pat
 
     print(f"\nSubtotal a pagar: ${sub_total}")
 
+
+
+#-------------------FUNCIONES NUEVAS CON SLICING Y CON LO QUE YA HABIA QUEDADO EN FACTURACION OFICIAL------------
+
+from utils.auxiliares import buscar_paciente_por_id
+import re
+import json
+from db.funciones.archivos_json import cargar_archivo_pacientes, guardar_facturas, cargar_facturas
+from db.funciones.archivos_txt import cargar_turnos
+from utils.auxiliares import buscar_paciente_por_id
+
+
+def imprimir_factura_paciente(id_paciente, path_facturas="db/facturacion.json", path_datos="db/datos.json"):
+    import json
+    import re
+    from utils.auxiliares import buscar_paciente_por_id
+
+    with open(path_facturas, "r", encoding="utf-8") as archivo_facturas:
+        facturas = json.load(archivo_facturas)
+        if facturas and isinstance(facturas[0], list):
+            facturas = facturas[0]
+    with open(path_datos, "r", encoding="utf-8") as archivo_datos:
+        pacientes = json.load(archivo_datos)
+
+    paciente = buscar_paciente_por_id(pacientes, id_paciente)
+    if not paciente:
+        print("Paciente no encontrado.")
+        return
+
+    sub_total = 0
+    print("\n" + "=" * 60)
+    print(f"{'FACTURAS DE PACIENTE'.center(60)}")
+    print("=" * 60)
+    print(f"Nombre: {paciente['nombre']} {paciente['apellido']}".ljust(40) + f"DNI: {paciente['dni']}")
+    print("-" * 60)
+
+    patron_factura = re.compile(r"(\d{4}-\d{2}-\d{2}|lunes|miércoles|viernes)", re.IGNORECASE)
+    facturas_encontradas = False
+    for f in facturas:
+        if int(f["id_paciente"]) == int(id_paciente):
+            facturas_encontradas = True
+            sub_total += f["importe"]
+            fecha = f["dia"]
+
+            # Nuevo bloque: primero intenta con regex, si falla usa slicing
+            coincidencia = patron_factura.search(fecha)
+            if coincidencia:
+                fecha_formateada = coincidencia.group(1)
+            else:
+                fecha_formateada = fecha[:10]  # muestra por ejemplo "2025-07-21"
+
+            print(f"| ID Factura: {str(f['id_factura']).ljust(6)} | Fecha: {fecha_formateada.ljust(10)} | Hora: {f['hora'].ljust(5)} | Importe: ${str(f['importe']).ljust(8)}|")
+            print("-" * 60)
+
+    if not facturas_encontradas:
+        print("No se encontraron facturas para este paciente.".center(60))
+
+    print("=" * 60)
+
+def imprimir_todas_las_facturas_ordenadas(ruta_facturas="db/facturacion.json"):
+    facturas = cargar_facturas(ruta_facturas)
+    # Orden personalizado de días
+    orden_dias = {"lunes": 1, "miércoles": 2, "viernes": 3}
+    # Ordenar por día y luego por hora
+    facturas_ordenadas = sorted(
+        facturas,
+        key=lambda f: (
+            orden_dias.get(f.get("dia", "").lower(), 99),
+            f.get("hora", "")
+        )
+    )
+
+    print("\n" + "="*70)
+    print("FACTURAS ORDENADAS POR DÍA Y HORARIO".center(70))
+    print("="*70)
+    for f in facturas_ordenadas:
+        print(f"| Día: {str(f.get('dia', '---')).capitalize()[:10]:<10} | Hora: {str(f.get('hora', '---'))[:5]:<5} | ID Factura: {str(f.get('id_factura', '')):<4} | Paciente: {str(f.get('id_paciente', '')):<4} | Importe: ${str(f.get('importe', '')):<8}|")
+        print("-"*70)
+    print("="*70)
+    
+def imprimir_facturas_por_dni(dni, ruta_pacientes="db/datos.json", ruta_facturas="db/facturacion.json"):
+    pacientes = cargar_archivo_pacientes(ruta_pacientes)
+    facturas = cargar_facturas(ruta_facturas)
+    paciente = buscar_paciente(dni, pacientes)
+
+    if not paciente:
+        print(f"No se encontró paciente con DNI {dni}.")
+        return
+
+    facturas_cliente = [f for f in facturas if int(f.get("id_paciente", -1)) == int(paciente["id"])]
+
+    if not facturas_cliente:
+        print(f"No hay facturas para el paciente {paciente.get('nombre', '')} {paciente.get('apellido', '')} (DNI: {dni})")
+        return
+
+    print("\n" + "="*60)
+    print(f"FACTURAS DE: {paciente.get('nombre', '').upper()} {paciente.get('apellido', '').upper()} (DNI: {dni})".center(60))
+    print("="*60)
+    for f in facturas_cliente:
+        dia = f.get("dia", "---")
+        hora = f.get("hora", "---")
+        print(f"| ID Factura: {str(f.get('id_factura', '')).ljust(6)} | Día: {str(dia)[:10].ljust(10)} | Hora: {str(hora)[:5].ljust(5)} | Importe: ${str(f['importe']).ljust(8)}|")
+        print("-"*60)
+    print(f"{'TOTAL':>50}: ${sum(f['importe'] for f in facturas_cliente)}")
+    print("="*60)
+
+def cierre_total_con_detalle(ruta):
+
+    try:
+        with open(ruta, "r", encoding="utf-8") as archivo:
+            facturas = json.load(archivo)
+            # Si hay lista de listas, aplanar para manejarlos mejor
+            if facturas and isinstance(facturas[0], list): #verifica si es una lista de listas
+                facturas = facturas[0] #esto me sirve para tomar la primera lista de la lista de listas
+            total_general = 0
+            totales_por_dia = {}
+            for factura in facturas:
+                total_general += factura["importe"]
+                dia = factura["dia"]
+                totales_por_dia[dia] = totales_por_dia.get(dia, 0) + factura["importe"] #.get() devuelve el valor de la clave si existe, o 0 si no existe
+
+            print("\n" + "="*50)
+            print(f"{'CIERRE DE CAJA':^50}")
+            print("="*50)
+            for dia, total in totales_por_dia.items():
+                print(f"Total generado el día {dia.capitalize():<10}: ${total}")
+            print("-"*50)
+            print(f"{'TOTAL GENERAL':<30}: ${total_general}")
+            print("="*50)
+            return total_general, totales_por_dia
+    except Exception as e:
+        print(f"No se puede abrir el archivo: {e}")
+        return 0, {}
+
+
