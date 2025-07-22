@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 05a96f10f8c6908d75fe91df8022551cd576c3db
 
 def vaciar_turno(matriz):
     turno_vaciar=int(input("ingrese el id del turno a eliminar:"))
@@ -38,13 +43,20 @@ def eliminar_turno(matriz_t):
     
 
 
+=======
+def vaciar_turno(matriz):
+=======
 
+<<<<<<< HEAD
 
 
 =======
+=======
+>>>>>>> 05a96f10f8c6908d75fe91df8022551cd576c3db
 from db.funciones.archivos_txt import guardar_turnos
 
 def vaciar_turno(matriz_turnos):
+>>>>>>> origin/main
     try:
         turno_vaciar = int(input("Ingrese el ID del turno a vaciar: "))
         for i in range(len(matriz_turnos)):
@@ -106,7 +118,21 @@ def modifica_turno(turno, dia, matriz_turnos):
             paciente = fila[3]
             doctor = fila[5]
             estado = fila[4]
+<<<<<<< HEAD
+    
+    matriz[dia-1][3] = paciente
+    matriz[dia-1][5] = doctor
+    matriz[dia-1][4] = estado
+
+    matriz[turno-1][3] = None
+    matriz[turno-1][5] = None
+    matriz[turno-1][4] = 'disponible'
+
+    print("✅ El turno ha sido modificado correctamente.")
+>>>>>>> origin/main
+=======
             break
+>>>>>>> origin/main
 
     for fila in matriz_turnos:
         if fila[0] == dia:
@@ -121,5 +147,9 @@ def modifica_turno(turno, dia, matriz_turnos):
             fila[4] = 'disponible'
 
     guardar_turnos(matriz_turnos)
+<<<<<<< HEAD
     print("✅ El turno ha sido modificado correctamente.")
 >>>>>>> origin/main
+=======
+    print("✅ El turno ha sido modificado correctamente.")
+>>>>>>> 05a96f10f8c6908d75fe91df8022551cd576c3db
