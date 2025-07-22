@@ -63,19 +63,7 @@ def actualizar_turno_por_id(id_turno, id_paciente, estado, id_medico, path=RUTA_
 
 
 
-def obtener_turnos_paciente(id_paciente):
-    """Obtiene los turnos de un paciente leyendo línea por línea."""
-    turnos_paciente = []
-    with open(RUTA_TURNOS, "r", encoding="utf-8") as archivo:
-        for linea in archivo:
-            turno = linea.strip().split('\t')
-            turno[0] = int(turno[0])  # id_turno
-            turno[3] = int(turno[3]) if turno[3] != 'None' else None
-            if turno[3] == id_paciente:
-                turnos_paciente.append((turno[1], turno[2]))
-    if not turnos_paciente:
-        return "No tiene aún turnos asignados."
-    return turnos_paciente
+
 
 
 def cargar_turno_paciente(id_paciente, edad_paciente):
@@ -126,7 +114,7 @@ def cargar_turno_paciente(id_paciente, edad_paciente):
 
 
 
-def mostrar_turnosdipo_paciente():
+def mostrar_turnosdiponibles():
     print("\n" + "═" * 70)
     print(f"📊 TURNOS DISPONIBLES")
     print("═" * 70)
@@ -143,32 +131,36 @@ def mostrar_turnosdipo_paciente():
     print("\n" + "═" * 70)
 
 
-def ver_mis_turnos(dni_paciente):
-    pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)
+def mostrar_turnos_paciente_por_dni(dni_paciente):
     id_paciente = obtener_id_por_dni(dni_paciente)
     if not id_paciente:
         print("\n⚠️ No se encontró paciente con ese DNI")
         return
     
-    turnos = obtener_turnos_paciente(id_paciente)
-    
     print("\n" + "═" * 50)
     print(f"📅 TURNOS DE {obtener_nombre_paciente(id_paciente).upper()}")
     print("═" * 50)
-    
-    if turnos == "No tiene aún turnos asignados.":
+
+    turnos_paciente = []
+
+    with open(RUTA_TURNOS, "r", encoding="utf-8") as archivo:
+        for linea in archivo:
+            partes = linea.strip().split('\t')
+            partes[0] = int(partes[0])
+            partes[3] = int(partes[3]) if partes[3] != 'None' else None
+
+            if partes[3] == id_paciente:
+                turnos_paciente.append(partes)
+
+    if not turnos_paciente:
         print("\nℹ️ No tienes turnos asignados.")
     else:
         print("\nID  DÍA        HORA     ESTADO")
         print("-" * 30)
-        with open(RUTA_TURNOS, "r", encoding="utf-8") as archivo:
-            for linea in archivo:
-                turno = linea.strip().split('\t')
-                turno[0] = int(turno[0])
-                turno[3] = int(turno[3]) if turno[3] != 'None' else None
-                if turno[3] == id_paciente:
-                    estado = "🔴 OCUPADO" if turno[4] == 'ocupado' else "🟢 DISPONIBLE"
-                    print(f"{turno[0]:<3} {turno[1]:<10} {turno[2]:<8} {estado}")
-    
+        for partes in turnos_paciente:
+            # Estado fijo porque son todos ocupados por el paciente
+            estado = "🔴 OCUPADO"
+            print(f"{partes[0]:<3} {partes[1]:<10} {partes[2]:<8} {estado}")
+
     print("\n" + "═" * 50)
     input("\n⏎ Presione Enter para continuar...")
