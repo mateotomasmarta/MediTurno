@@ -25,21 +25,42 @@ def leer_todos_los_turnos(path=RUTA_TURNOS):
 
 
 
-import os
+def actualizar_turno_por_id(id_turno, id_paciente, estado, id_medico, path=RUTA_TURNOS):
+    # Primero leemos todas las líneas
+    with open(path, "r", encoding="utf-8") as archivo:
+        lineas = archivo.readlines()
 
-def guardar_turno_por_linea(nueva_fila, num_linea, path=RUTA_TURNOS):
-    ruta_temp = path + ".tmp"
-    with open(path, "r", encoding="utf-8") as archivo_original, \
-         open(ruta_temp, "w", encoding="utf-8") as archivo_temp:
-        for i, linea in enumerate(archivo_original, start=1):
-            if i == num_linea:
-                fila_serializada = []
-                for elem in nueva_fila:
-                    fila_serializada.append("None" if elem is None else str(elem))
-                archivo_temp.write('\t'.join(fila_serializada) + '\n')
-            else:
-                archivo_temp.write(linea)
-    os.replace(ruta_temp, path)
+    for i, linea in enumerate(lineas):
+        elementos = linea.strip().split('\t')
+        # Convertimos el ID del turno de la línea
+        try:
+            id_actual = int(elementos[0])
+        except ValueError:
+            continue  # si no es un número, ignorar esa línea
+
+        if id_actual == id_turno:
+            # Actualizamos los campos: 
+            # 3° posición -> ID paciente
+            # 4° posición -> estado
+            # 5° posición -> ID médico
+            elementos[3] = str(id_paciente) if id_paciente is not None else "None"
+            elementos[4] = estado
+            elementos[5] = str(id_medico) if id_medico is not None else "None"
+
+            # Reconstruimos la línea y la guardamos en la lista
+            lineas[i] = '\t'.join(elementos) + '\n'
+            break
+    else:
+        # Si no se encontró el turno, podemos decidir si:
+        #  - devolver error
+        #  - o crear un nuevo turno
+        # Ahora sólo aviso que no existe.
+        raise ValueError(f"Turno con ID {id_turno} no encontrado.")
+
+    # Reescribimos el archivo con la línea actualizada
+    with open(path, "w", encoding="utf-8") as archivo:
+        archivo.writelines(lineas)
+
 
 
 def obtener_turnos_paciente(id_paciente):
@@ -79,30 +100,30 @@ def cargar_turno_paciente(id_paciente, edad_paciente):
         print(" ⚠️ Hora inválida. Por favor, ingresa una hora válida (08:00, 09:00, 16:00).")
         hora_turno = input("Hora (ejemplo: 08:00, 09:00, 16:00): ").strip()
 
-    # Validar que el turno está disponible leyendo línea por línea:
-    turno_disponible = False
-    num_linea = 0
+    # Buscar el turno disponible y obtener su ID
+    id_turno_encontrado = None
     with open(RUTA_TURNOS, "r", encoding="utf-8") as archivo:
-        for i, linea in enumerate(archivo, start=1):
+        for linea in archivo:
             datos = linea.strip().split('\t')
             if datos[1] == dia_turno and datos[2] == hora_turno:
-                num_linea = i
                 if datos[4] == 'disponible' and datos[3] == 'None':
-                    turno_disponible = True
-                break
+                    id_turno_encontrado = int(datos[0])
+                    break
     
-    if not turno_disponible:
+    if id_turno_encontrado is None:
         print("⚠️ El turno no está disponible.")
         return
 
-    # Cargar la línea, modificarla y guardar:
-    turno_actual = cargar_turno_por_linea(num_linea)
-    turno_actual[3] = id_paciente
-    turno_actual[4] = 'ocupado'
-    turno_actual[5] = 2 if edad_paciente <= 18 else 1
-    guardar_turno_por_linea(turno_actual, num_linea)
+    # Definir el id_medico según la edad
+    id_medico = 2 if edad_paciente <= 18 else 1
 
-    print(f" 🟢 ¡Turno asignado con éxito! Tu turno es el {dia_turno} a las {hora_turno}.")
+    # Usar la función que actualiza el turno por ID directamente
+    try:
+        actualizar_turno_por_id(id_turno_encontrado, id_paciente, 'ocupado', id_medico)
+        print(f" 🟢 ¡Turno asignado con éxito! Tu turno es el {dia_turno} a las {hora_turno}.")
+    except ValueError as e:
+        print("❌ Error al asignar el turno:", e)
+
 
 
 def mostrar_turnosdipo_paciente():
