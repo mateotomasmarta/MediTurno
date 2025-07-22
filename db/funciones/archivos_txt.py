@@ -1,14 +1,16 @@
 RUTA_TURNOS = "db/turnos.txt"
 
-def cargar_turnos():
+def cargar_turnos_generico():
     """
     Carga los turnos desde el archivo 'db/turnos.txt' y los devuelve como una matriz.
+    Usa readline() para leer línea por línea.
     Si el archivo no existe, retorna una lista vacía.
     """
+    matriz = []
     try:
         with open('db/turnos.txt', 'r', encoding='utf-8') as f:
-            matriz = []
-            for linea in f:
+            linea = f.readline()
+            while linea:
                 elementos = linea.strip().split('\t')
                 fila = []
                 for elem in elementos:
@@ -19,14 +21,75 @@ def cargar_turnos():
                     else:
                         fila.append(elem)
                 matriz.append(fila)
-            return matriz
+                linea = f.readline()
+        return matriz
     except FileNotFoundError:
         return []
 
-def guardar_turnos(matriz_turnos, path="db/turnos.txt"):
+
+def guardar_turnos_generico(matriz_turnos, path="db/turnos.txt"):
     with open(path, "w", encoding="utf-8") as archivo:
         for turno in matriz_turnos:
-            archivo.write('\t'.join(str(x) for x in turno) + '\n') #serializacion
+            fila_serializada = []
+            for elem in turno:
+                if elem is None:
+                    fila_serializada.append("None")
+                else:
+                    fila_serializada.append(str(elem))
+            archivo.write('\t'.join(fila_serializada) + '\n')
+
+
+def cargar_turno_por_linea(num_linea, path="db/turnos.txt"):
+    """
+    Lee una línea específica del archivo y devuelve la lista con los datos serializados/deserializados.
+    num_linea: índice empezando en 1 (primera línea es línea 1)
+    """
+    with open(path, "r", encoding="utf-8") as archivo:
+        for i in range(num_linea - 1):
+            archivo.readline()  # descartamos líneas anteriores
+        
+        linea = archivo.readline()
+        if not linea:
+            return None  # si la línea no existe
+        
+        elementos = linea.strip().split('\t')
+        fila = []
+        for elem in elementos:
+            if elem == "None":
+                fila.append(None)
+            elif elem.isdigit():
+                fila.append(int(elem))
+            else:
+                fila.append(elem)
+        return fila
+import os
+
+def guardar_turno_por_linea(nueva_fila, num_linea, path="db/turnos.txt"):
+    """
+    Modifica la línea `num_linea` en el archivo con los datos de `nueva_fila`.
+    Si la línea no existe, no hace nada.
+    """
+    ruta_temp = path + ".tmp"
+    
+    with open(path, "r", encoding="utf-8") as archivo_original, \
+         open(ruta_temp, "w", encoding="utf-8") as archivo_temp:
+        
+        for i, linea in enumerate(archivo_original, start=1):
+            if i == num_linea:
+                # Serializamos nueva_fila para escribir
+                fila_serializada = []
+                for elem in nueva_fila:
+                    if elem is None:
+                        fila_serializada.append("None")
+                    else:
+                        fila_serializada.append(str(elem))
+                archivo_temp.write('\t'.join(fila_serializada) + '\n')
+            else:
+                archivo_temp.write(linea)
+    
+    os.replace(ruta_temp, path)
+
+
 
 matriz_turnos = cargar_turnos()
 
