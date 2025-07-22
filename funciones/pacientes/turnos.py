@@ -8,23 +8,21 @@ RUTA_PACIENTES = 'db/datos.json'
 RUTA_TURNOS = "db/turnos.txt"
 
 
-def cargar_turno_por_linea(num_linea, path=RUTA_TURNOS):
+def leer_todos_los_turnos(path=RUTA_TURNOS):
+    turnos = []
     with open(path, "r", encoding="utf-8") as archivo:
-        for i in range(num_linea - 1):
-            archivo.readline()
-        linea = archivo.readline()
-        if not linea:
-            return None
-        elementos = linea.strip().split('\t')
-        fila = []
-        for elem in elementos:
-            if elem == "None":
-                fila.append(None)
-            elif elem.isdigit():
-                fila.append(int(elem))
-            else:
-                fila.append(elem)
-        return fila
+        for linea in archivo:
+            elementos = linea.strip().split('\t')
+            fila = []
+            for elem in elementos:
+                if elem == "None":
+                    fila.append(None)
+                elif elem.isdigit():
+                    fila.append(int(elem))
+                else:
+                    fila.append(elem)
+            turnos.append(fila
+
 
 
 import os
