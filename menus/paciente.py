@@ -2,19 +2,18 @@ import time
 from utils.validaciones import validar_dni
 from utils.auxiliares import buscar_paciente
 from funciones.pacientes.registro import registrar_paciente
-from funciones.pacientes.turnos import obtener_turnos_paciente, cargar_turno_paciente, mostrar_turnosdipo_paciente, ver_mis_turnos
+from funciones.pacientes.turnos import cargar_turno_paciente, mostrar_turnosdipo_paciente, ver_mis_turnos
+
 from db.funciones.archivos_json import cargar_archivo_pacientes, guardar_archivo_pacientes, cargar_archivo_json, RUTA_PACIENTES, RUTA_FACTURAS
-from db.funciones.archivos_txt import guardar_turnos, cargar_turnos, RUTA_TURNOS
+from db.funciones.archivos_txt import guardar_turno_por_linea, RUTA_TURNOS
 from funciones.pacientes.facturacion import generar_facturas_desde_turnos, imprimir_factura_paciente
-
-
 
 def autenticar_paciente():
     """Maneja el proceso de login/registro de pacientes"""
     print("\n" + "═" * 50)
     print("🏥 BIENVENIDO AL SISTEMA DE PACIENTES")
     print("═" * 50)
-    
+
     while True:
         try:
             print("\n" + "═" * 50)
@@ -24,18 +23,18 @@ def autenticar_paciente():
             print("║  2. 📝  No, quiero registrarme".ljust(48) + "║")
             print("║  3. ↩️  Volver al menú principal".ljust(50) + "║")
             print("═" * 50)
-            
+
             opcion = input("\n➤ Seleccione una opción [1-3]: ").strip()
-            
+
             if opcion == "1":
                 try:
                     dni = validar_dni()
                     pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)
                     paciente = buscar_paciente(dni, pacientes)
-                    
+
                     if paciente:
                         print(f"\nBienvenido/a {paciente['nombre']} {paciente['apellido']}!")
-                        return paciente  
+                        return paciente
                     else:
                         print("\n⚠️ No se encontró un paciente con ese DNI.")
                         print("¿Desea registrarse? (s/n)")
@@ -43,7 +42,7 @@ def autenticar_paciente():
                             return registrar_paciente()
                 except Exception as e:
                     print(f"⚠️ Error al validar el DNI: {e}")
-            
+
             elif opcion == "2":
                 try:
                     resultado = registrar_paciente()
@@ -52,12 +51,12 @@ def autenticar_paciente():
                         autenticar_paciente()
                 except Exception as e:
                     print(f"⚠️ Error al registrar paciente: {e}")
-            
+
             elif opcion == "3":
                 print("\n🔙 Volviendo al menú principal...")
                 time.sleep(1)
                 break
-            
+
             else:
                 print("\n⚠️ Opción inválida. Por favor intente nuevamente.")
         except Exception as e:
@@ -66,15 +65,14 @@ def autenticar_paciente():
 def mostrar_menu_pacientes():
     """Menú principal para pacientes autenticados"""
     paciente_actual = autenticar_paciente()
-        
+
     if not paciente_actual:
-        return  
-    
+        return
+
     while True:
         try:
-            matriz_turnos = cargar_turnos()
             nombre_completo = f"{paciente_actual['nombre']} {paciente_actual['apellido']}"
-            
+
             print("\n" + "═" * 50)
             print(f"🏥 MÓDULO DE PACIENTES | {nombre_completo}")
             print("═" * 50)
@@ -82,24 +80,20 @@ def mostrar_menu_pacientes():
             print("2. 🕒 Agendar nuevo turno")
             print("3. 🧾 Ver mis facturas")
             print("4. ↩️  Volver al menú principal")
-            
+
             opcion = input("\n➤ Seleccione una opción [1-4]: ").strip()
-            
+
             if opcion == "1":
                 try:
-                    matriz_turnos = cargar_turnos()
-                    ver_mis_turnos(paciente_actual['dni'], matriz_turnos)
+                    ver_mis_turnos(paciente_actual['dni'])
                 except Exception as e:
                     print(f"⚠️ Error al mostrar los turnos: {e}")
-            
+
             elif opcion == "2":
                 try:
-                    matriz_turnos = cargar_turnos()  # Usar función establecida para cargar turnos
-                    mostrar_turnosdipo_paciente(matriz_turnos)
-                    cargar_turno_paciente(paciente_actual['id'], paciente_actual['edad'], matriz_turnos)
-                    guardar_turnos(matriz_turnos)  # Usar función establecida para guardar turnos
+                    mostrar_turnosdipo_paciente()
+                    cargar_turno_paciente(paciente_actual['id'], paciente_actual['edad'])
 
-                    # Generar facturas usando función establecida
                     generar_facturas_desde_turnos(RUTA_TURNOS, RUTA_FACTURAS)
 
                     facturas = cargar_archivo_json(RUTA_FACTURAS)
@@ -119,17 +113,17 @@ def mostrar_menu_pacientes():
                         print("No se encontró la factura recién generada.")
                 except Exception as e:
                     print(f"⚠️ Error al agendar un turno: {e}")
-                    
+
             elif opcion == "3":
                 try:
                     imprimir_factura_paciente(paciente_actual['id'], RUTA_FACTURAS, RUTA_PACIENTES)
                 except Exception as e:
                     print(f"⚠️ Error al mostrar las facturas: {e}")
-            
+
             elif opcion == "4":
                 print("\n🔙 Volviendo al menú principal...")
                 break
-            
+
             else:
                 print("\n⚠️ Opción inválida. Por favor intente nuevamente.")
             time.sleep(1)

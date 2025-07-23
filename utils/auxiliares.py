@@ -1,12 +1,13 @@
-from db.funciones.archivos_txt import matriz_medicos
 from db.funciones.archivos_json import *
+from db.funciones.archivos_txt import obtener_medico_por_id
+
 RUTA_PACIENTES = 'db/datos.json'
 
 
 def obtener_nombre_doctor(id_doctor):
-    for doctor in matriz_medicos:
-        if doctor[0] == id_doctor:
-            return doctor[1]  # Solo nombre completo
+    medico = obtener_medico_por_id(id_doctor)
+    if medico:
+        return medico[1]  # Solo el nombre completo
     return "Sin asignar"
 
 
@@ -18,6 +19,7 @@ def obtener_nombre_paciente(id_paciente):
                 return f"{p['nombre']} {p['apellido']}"
     return "---"
 
+
 def buscar_por_dni(dni):
     resultados = []
     pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)
@@ -25,6 +27,7 @@ def buscar_por_dni(dni):
         if p['dni'].startswith(dni):
             resultados.append(p)
     return resultados
+
 
 def buscar_por_nombre_o_apellido(filtro):
     resultados = []
@@ -35,12 +38,14 @@ def buscar_por_nombre_o_apellido(filtro):
             resultados.append(p)
     return resultados
 
+
 def buscar_paciente(dni, pacientes):
     dni = dni.strip()
     for paciente in pacientes:
         if paciente['dni'] == dni:
             return paciente
     return None
+
 
 def obtener_id_por_dni(dni_buscado):
     pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)
@@ -50,6 +55,7 @@ def obtener_id_por_dni(dni_buscado):
     else:
         return None
 
+
 def generar_nuevo_id():
     pacientes = cargar_archivo_pacientes(RUTA_PACIENTES)
     if not pacientes:
@@ -57,10 +63,10 @@ def generar_nuevo_id():
     return max(paciente['id'] for paciente in pacientes) + 1
 
 
-#RECURSIVIDAD
+# RECURSIVIDAD
 def buscar_paciente_por_id(pacientes, id_paciente, index=0):
     if index >= len(pacientes):
-        return None 
+        return None
     if pacientes[index]['id'] == id_paciente:
         return pacientes[index]
-    return buscar_paciente_por_id(pacientes, id_paciente, index + 1)  # Llamada recursiva
+    return buscar_paciente_por_id(pacientes, id_paciente, index + 1)

@@ -3,7 +3,7 @@ from utils.auxiliares import buscar_paciente_por_id
 import re
 import json
 from db.funciones.archivos_json import cargar_archivo_pacientes, guardar_facturas, cargar_facturas
-from db.funciones.archivos_txt import cargar_turnos
+from db.funciones.archivos_txt import cargar_turno_por_linea
 from utils.auxiliares import buscar_paciente_por_id
 
 def generar_facturas_desde_turnos(path_turnos="db/turnos.txt", path_facturas="db/facturacion.json"):

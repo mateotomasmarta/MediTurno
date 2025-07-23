@@ -1,123 +1,107 @@
+import os
+import tempfile
+import shutil
+
+
 RUTA_TURNOS = "db/turnos.txt"
 
-def cargar_turnos_generico():
-    """
-    Carga los turnos desde el archivo 'db/turnos.txt' y los devuelve como una matriz.
-    Usa readline() para leer línea por línea.
-    Si el archivo no existe, retorna una lista vacía.
-    """
-    matriz = []
+def cargar_turno_por_linea(num_linea, ruta=RUTA_TURNOS):
+    """Carga una línea específica del archivo de turnos."""
     try:
-        with open('db/turnos.txt', 'r', encoding='utf-8') as f:
-            linea = f.readline()
-            while linea:
-                elementos = linea.strip().split('\t')
-                fila = []
-                for elem in elementos:
-                    if elem == 'None':
-                        fila.append(None)
-                    elif elem.isdigit():
-                        fila.append(int(elem))
-                    else:
-                        fila.append(elem)
-                matriz.append(fila)
-                linea = f.readline()
-        return matriz
-    except FileNotFoundError:
-        return []
-
-
-def guardar_turnos_generico(matriz_turnos, path="db/turnos.txt"):
-    with open(path, "w", encoding="utf-8") as archivo:
-        for turno in matriz_turnos:
-            fila_serializada = []
-            for elem in turno:
-                if elem is None:
-                    fila_serializada.append("None")
-                else:
-                    fila_serializada.append(str(elem))
-            archivo.write('\t'.join(fila_serializada) + '\n')
-
-
-def cargar_turno_por_linea(num_linea, path="db/turnos.txt"):
-    """
-    Lee una línea específica del archivo y devuelve la lista con los datos serializados/deserializados.
-    num_linea: índice empezando en 1 (primera línea es línea 1)
-    """
-    with open(path, "r", encoding="utf-8") as archivo:
-        for i in range(num_linea - 1):
-            archivo.readline()  # descartamos líneas anteriores
-        
-        linea = archivo.readline()
-        if not linea:
-            return None  # si la línea no existe
-        
-        elementos = linea.strip().split('\t')
-        fila = []
-        for elem in elementos:
-            if elem == "None":
-                fila.append(None)
-            elif elem.isdigit():
-                fila.append(int(elem))
-            else:
-                fila.append(elem)
-        return fila
-import os
-
-def guardar_turno_por_linea(nueva_fila, num_linea, path="db/turnos.txt"):
-    """
-    Modifica la línea `num_linea` en el archivo con los datos de `nueva_fila`.
-    Si la línea no existe, no hace nada.
-    """
-    ruta_temp = path + ".tmp"
-    
-    with open(path, "r", encoding="utf-8") as archivo_original, \
-         open(ruta_temp, "w", encoding="utf-8") as archivo_temp:
-        
-        for i, linea in enumerate(archivo_original, start=1):
-            if i == num_linea:
-                # Serializamos nueva_fila para escribir
-                fila_serializada = []
-                for elem in nueva_fila:
-                    if elem is None:
-                        fila_serializada.append("None")
-                    else:
-                        fila_serializada.append(str(elem))
-                archivo_temp.write('\t'.join(fila_serializada) + '\n')
-            else:
-                archivo_temp.write(linea)
-    
-    os.replace(ruta_temp, path)
-
-
-
-matriz_turnos = cargar_turnos()
-
-def cargar_medicos(path="db/medicos.txt"):
-    matriz_medicos = []
-    with open(path, "r", encoding="utf-8") as archivo:
-        for linea in archivo:
-            partes = linea.strip().split(",")
-            if len(partes) == 4:
-                partes[0] = int(partes[0])  # Convierte el ID a entero
-                matriz_medicos.append(partes)
-    return matriz_medicos
-
-def buscar_medico_por_id(id_medico, path="db/medicos.txt"):
-    """Busca un médico por su ID y retorna la lista con sus datos, o None si no existe."""
-    medicos = cargar_medicos(path)
-    for medico in medicos:
-        if medico[0] == id_medico:
-            return medico
+        with open(ruta, 'r', encoding='utf-8') as f:
+            for i, linea in enumerate(f, start=1):
+                if i == num_linea:
+                    datos = linea.strip().split('\t')
+                    return [int(datos[0]), datos[1], datos[2],
+                            int(datos[3]) if datos[3] != 'None' else None,
+                            datos[4],
+                            int(datos[5]) if datos[5] != 'None' else None]
+    except Exception as e:
+        print(f"⚠️ Error al cargar la línea {num_linea}: {e}")
     return None
 
-def buscar_medico_por_nombre(nombre, path="db/medicos.txt"):
-    """Busca médicos por nombre (parcial o completo, insensible a mayúsculas/minúsculas)."""
-    medicos = cargar_medicos(path)
-    resultado = []
-    for medico in medicos:
-        if nombre.lower() in medico[1].lower():
-            resultado.append(medico)
-    return resultado
 
-matriz_medicos = cargar_medicos()
+
+def guardar_turno_por_linea(fila, num_linea, ruta=RUTA_TURNOS):
+
+    try:
+        # Crear archivo temporal en la misma carpeta
+        dir_name = os.path.dirname(ruta)
+        with tempfile.NamedTemporaryFile('w', delete=False, encoding='utf-8', dir=dir_name) as tmp:
+            with open(ruta, 'r', encoding='utf-8') as original:
+                for i, linea in enumerate(original, start=1):
+                    if i == num_linea:
+                        nueva_linea = "\t".join([
+                            str(fila[0]), fila[1], fila[2],
+                            str(fila[3]) if fila[3] is not None else 'None',
+                            fila[4],
+                            str(fila[5]) if fila[5] is not None else 'None'
+                        ]) + "\n"
+                        tmp.write(nueva_linea)
+                    else:
+                        tmp.write(linea)
+
+        # Reemplazar el archivo original por el temporal
+        shutil.move(tmp.name, ruta)
+
+    except Exception as e:
+        print(f"❌ Error al guardar la línea {num_linea}: {e}")
+
+
+def iterar_turnos_disponibles(ruta=RUTA_TURNOS):
+    """Iterador que devuelve turnos disponibles línea por línea."""
+    try:
+        with open(ruta, 'r', encoding='utf-8') as f:
+            for linea in f:
+                datos = linea.strip().split('\t')
+                if len(datos) >= 6 and datos[4] == "disponible":
+                    yield datos
+    except FileNotFoundError:
+        print("❌ Archivo de turnos no encontrado.")
+
+
+def buscar_turno_por_dia_y_hora(dia, hora, ruta=RUTA_TURNOS):
+    """Devuelve el número de línea del primer turno disponible con día y hora específicos."""
+    try:
+        with open(ruta, 'r', encoding='utf-8') as f:
+            for i, linea in enumerate(f, start=1):
+                datos = linea.strip().split('\t')
+                if len(datos) >= 5 and datos[1] == dia and datos[2] == hora and datos[4] == "disponible":
+                    return i
+    except FileNotFoundError:
+        print("❌ No se encontró el archivo de turnos.")
+    return None
+
+def obtener_medico_por_id(id_buscado):
+    """Busca un médico por ID sin cargar toda la lista en memoria"""
+    try:
+        with open("db/medicos.txt", "r", encoding="utf-8") as archivo:
+            for linea in archivo:
+                # Cambiar el separador según corresponda
+                datos = linea.strip().split(",")  # Cambié \t por ,
+                if int(datos[0]) == id_buscado:
+                    return datos  # [id, nombre, apellido, especialidad]
+    except FileNotFoundError:
+        print("❌ No se encontró el archivo de médicos.")
+    except ValueError:
+        print("❌ Error: formato incorrecto en archivo de médicos.")
+    return None
+
+
+def iterar_todos_los_turnos(ruta=RUTA_TURNOS):
+    """Iterador que devuelve todos los turnos (ocupados y disponibles) línea por línea."""
+    try:
+        with open(ruta, 'r', encoding='utf-8') as archivo:
+            for linea in archivo:
+                datos = linea.strip().split('\t')
+                if len(datos) >= 6:
+                    yield [
+                        int(datos[0]),            # ID
+                        datos[1],                 # Día
+                        datos[2],                 # Hora
+                        int(datos[3]) if datos[3] != 'None' else None,  # ID Paciente
+                        datos[4],                 # Estado
+                        int(datos[5]) if datos[5] != 'None' else None   # ID Doctor
+                    ]
+    except FileNotFoundError:
+        print("❌ No se encontró el archivo de turnos.")
